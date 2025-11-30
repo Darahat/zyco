@@ -1,7 +1,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 
 
-<link rel="stylesheet" href="{{asset('public/assets/css/nav_sidebar.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/css/nav_sidebar.css')}}" />
 <!--<i class="fas fa-ellipsis-vertical"></i> -->
 
 @php
@@ -14,7 +14,7 @@ $site_config = DB::table('site_config')->first();
     <!-- Brand Logo -->
     <!--<a href="{{route('driver.dashboard')}}" class="brand-link">
 		
-        <img src="{{asset('public/icons/zyco3.png')}}" alt="AdminLTE Logo"
+        <img src="{{asset('icons/zyco3.png')}}" alt="AdminLTE Logo"
 		
 		class="brand-image img-circle "  >
 		
@@ -37,10 +37,10 @@ $site_config = DB::table('site_config')->first();
         <div class=" col-3 ">
             <a href="https://zyco.nl" class="brand-link">
 
-                <!--<img src="{{asset('public/icons/layoutIcons/Group 122.png')}}" alt="AdminLTE Logo" class="brand-image" >-->
-                <img src="{{asset('public/icons/zyco4.png')}}" alt="AdminLTE Docs Logo Small"
+                <!--<img src="{{asset('icons/layoutIcons/Group 122.png')}}" alt="AdminLTE Logo" class="brand-image" >-->
+                <img src="{{asset('icons/zyco4.png')}}" alt="AdminLTE Docs Logo Small"
                     class="brand-image-xl logo-xs" style="left: 25px;">>
-                <img src="{{asset('public/site_pic/'.$site_config->site_logo)}}" alt="AdminLTE Docs Logo Large"
+                <img src="{{asset('site_pic/'.$site_config->site_logo)}}" alt="AdminLTE Docs Logo Large"
                     class="brand-image-xs logo-xl" style="left: 35px;">
             </a>
         </div>
@@ -58,7 +58,7 @@ $site_config = DB::table('site_config')->first();
 
     <!-- <a class="btn btn-primary btn-xs pushmenu brand-text  " data-widget="pushmenu" href="#" id="my-toggle-button-user"
         onclick="my_toggle_button_user()" role="button"><img
-            src="{{asset('public/icons/layoutIcons/Down_Arrow_9_.png')}}" /></a> -->
+            src="{{asset('icons/layoutIcons/Down_Arrow_9_.png')}}" /></a> -->
     <div class="sidebar ">
         <a href="#" onclick="divmenu('dashboard')" class="text-center">
             <div class="col-4 ">
@@ -112,11 +112,11 @@ $site_config = DB::table('site_config')->first();
                     <a href="{{ route('my_profile')}}">
                         <img @if(empty($user_profileInfo->profile_picture))
 
-                        src="{{ asset('public/icons/layoutIcons/Group 456.png') }}"
+                        src="{{ asset('icons/layoutIcons/Group 456.png') }}"
 
                         @else
 
-                        src="{{ asset('public/users_personalinfo/'.$user_profileInfo->profile_picture) }}"
+                        src="{{ asset('users_personalinfo/'.$user_profileInfo->profile_picture) }}"
                         @endif alt="AdminLTE Logo" class=" footer-avatar">
                     </a>
                 </div>

@@ -1,10 +1,19 @@
 @extends('app')
+
+@section('title', 'Login')
+
+{{-- Load only required plugins --}}
+<x-plugins.stepper />
+<x-plugins.firebase />
+<x-plugins.firebase-auth-helpers />
+<x-plugins.toastr />
+
 @section('content')
 
 <div class="row bg-white">
     <div class="col-md-7">
         <div class="hold-transition login-page loginSideDiv ">
-            <img src="public/images/Group 455.png" alt="login_image" class="loginSideImage">
+            <img src="{{asset('images/Group 455.png')}}" alt="login_image" class="loginSideImage">
         </div>
     </div>
     <div class="col-md-5 col-sm-12">
@@ -47,7 +56,7 @@
                                 <div class="  p-4">
                                     <div id="test-l-1" class="content">
                                         <div class="text-center">
-                                            <img src="{{asset('public/icons/zyco.png')}}" style="height:75px">
+                                            <img src="{{asset('icons/zyco.png')}}" style="height:75px">
                                             <p class="welcome_msg  ">Welcome to Zyco!</p>
                                             <!-- <p class="text-muted">Enter your email address or Phone Number</p>
                                             <small>Please add country code with your phone number</small> -->
@@ -87,7 +96,7 @@
                                 </div>
                                 <div id="test-l-2" class="content">
                                     <div class="text-center">
-                                        <img src="{{asset('public/icons/zyco.png')}}" style="height:75px">
+                                        <img src="{{asset('icons/zyco.png')}}" style="height:75px">
                                         <h5 style="font-weight: bolder">Sign in</h5>
                                         <p class="text-muted">Enter your password</p>
                                     </div>
@@ -130,7 +139,7 @@
                                 @if($result->need_otp == "Enabled")
                                 <div id="test-l-3" class="content">
                                     <div class="text-center">
-                                        <img src="{{asset('public/icons/zyco.png')}}" style="height:75px">
+                                        <img src="{{asset('icons/zyco.png')}}" style="height:75px">
                                         <h4>Enter your security code</h4>
                                         <small id="sentSuccess" class="text-muted" role="alert">
                                         </small>
@@ -227,7 +236,7 @@
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
-<!-- <script src="{{ asset('public/assets/js/authStepper.js') }}"></script> -->
+<!-- <script src="{{ asset('assets/js/authStepper.js') }}"></script> -->
 <script>
 var need_otp = '';
 var need_password = '';

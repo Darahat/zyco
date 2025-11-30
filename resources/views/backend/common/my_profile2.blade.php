@@ -1,11 +1,11 @@
  <div class="row p-2 profile-upper-portion mb-2">
      <div class="col-2 h-100 d-flex  align-items-center justify-content-center">
          @if(empty($personalInfo->profile_picture))
-         <img class="img-fluid  img-thumbnail user-image" id="avatar" src="{{ asset('public/icons/avatar1.png') }} "
+         <img class="img-fluid  img-thumbnail user-image" id="avatar" src="{{ asset('icons/avatar1.png') }} "
              alt="Avatar">
          @else
          <img class=" img-fluid img-thumbnail user-image" id="avatar"
-             src="{{ asset('public/users_personalinfo/'.$personalInfo->profile_picture) }} " alt="Avatar">
+             src="{{ asset('users_personalinfo/'.$personalInfo->profile_picture) }} " alt="Avatar">
          @endif
      </div>
      <div class="col-6 ">

@@ -12,8 +12,8 @@ use App\Models\Country;
 use App\Models\User;
 use App\Models\CustomDatatableColumn;
 use Illuminate\Http\File;
-use Auth;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Session;
 use App\Models\Role;
 use Carbon\Carbon;
@@ -62,9 +62,8 @@ class AdminController extends Controller
     // }  
     public function adminLoginForm()
     {
-
-
-        return view('auth.admin_login');
+        $result = DB::table('login_config')->where('login_type', 'Admin')->first();
+        return view('auth.admin_login', with(compact('result')));
     }
     public function authenticate(Request $request)
     {
@@ -275,8 +274,11 @@ class AdminController extends Controller
         }
         $admins = Admin::active()->count();
         if ($admins == 1 && $request->status == 'Inactive') {
-            flashMessage('danger', 'You can\'t inactive the last one. Atleast one should be available.');
-            return back();
+            $notification = array(
+                'status' => 'You can\'t inactive the last one. Atleast one should be available.',
+                'alert-type' => 'error'
+            );
+            return back()->with($notification);
         }
 
         $admin = Admin::find($request->id);
@@ -317,14 +319,26 @@ class AdminController extends Controller
             );
             return redirect()->route('admin_list')->with($notification);
         }
-    }
-    public function deleteAdmin($id)
-    {
-        $admins = Admin::active()->count();
-        if ($admins == 1) {
-            flashMessage('danger', 'You can\'t delete the last one. Atleast one should be available.');
-            return back();
+            $admins = Admin::active()->count();
+            if ($admins == 1) {
+                $notification = array(
+                    'status' => 'You can\'t delete the last one. Atleast one should be available.',
+                    'alert-type' => 'error'
+                );
+                return back()->with($notification);
+            }
         }
+    
+        public function deleteAdmin($id)
+        {
+            $admins = Admin::active()->count();
+            if ($admins == 1) {
+                $notification = array(
+                    'status' => 'You can\'t delete the last one. Atleast one should be available.',
+                    'alert-type' => 'error'
+                );
+                return back()->with($notification);
+            }
 
         $admin = Admin::where('id', $id)->first();
         if ($admin) {

@@ -5,7 +5,7 @@ $site_config = DB::table('site_config')->first();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 
 
-<link rel="stylesheet" href="{{asset('public/assets/css/nav_sidebar.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/css/nav_sidebar.css')}}" />
 <!--<i class="fas fa-ellipsis-vertical"></i> -->
 <aside class="main-sidebar sidebar-dark-secondary  layout-fixed  "
     style="background-color:white;padding-top:45px;padding-bottom:20px">
@@ -14,10 +14,10 @@ $site_config = DB::table('site_config')->first();
 
             <a href="https://zyco.nl" class="brand-link">
 
-                <!--<img src="{{asset('public/icons/layoutIcons/Group 122.png')}}" alt="AdminLTE Logo" class="brand-image" >-->
-                <img src="{{asset('public/icons/zyco4.png')}}" alt="AdminLTE Docs Logo Small"
+                <!--<img src="{{asset('icons/layoutIcons/Group 122.png')}}" alt="AdminLTE Logo" class="brand-image" >-->
+                <img src="{{asset('icons/zyco4.png')}}" alt="AdminLTE Docs Logo Small"
                     class="brand-image-xl logo-xs" style="left: 25px;">>
-                <img src="{{asset('public/site_pic/'.$site_config->site_logo)}}" alt="AdminLTE Docs Logo Large"
+                <img src="{{asset('site_pic/'.$site_config->site_logo)}}" alt="AdminLTE Docs Logo Large"
                     class="brand-image-xs logo-xl" style="left: 35px;">
             </a>
         </div>

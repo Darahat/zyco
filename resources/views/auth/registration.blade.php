@@ -1,4 +1,13 @@
 @extends('app')
+
+@section('title', 'Register - Create Account')
+
+{{-- Load required plugins --}}
+<x-plugins.firebase />
+<x-plugins.firebase-auth-helpers />
+<x-plugins.stepper />
+<x-plugins.toastr />
+
 @section('content')
 <script
     src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_KEY') }}&callback=initMap&libraries=places&v=weekly"
@@ -7,7 +16,7 @@
 <div class="row">
     <div class="col-md-4">
         <div class="hold-transition login-page loginSideDiv" style="background-color: #F4F9FF">
-            <img src="public/images/loginimage.png" alt="login_image" class="loginSideImage">
+            <img src="{{asset('images/loginimage.png')}}" alt="login_image" class="loginSideImage">
         </div>
     </div>
     <div class="col-md-8 col-sm-12">
@@ -47,7 +56,7 @@
                             <div class="card p-3">
                                 <div id="test-l-1" class="content">
                                     <div>
-                                        <img src="{{asset('public/icons/zyco.png')}}" style="height:75px">
+                                        <img src="{{asset('icons/zyco.png')}}" style="height:75px">
                                         <h4 class="font-weight-bolder">Create a dispatcher account</h4>
                                         {{-- <div id="error" class="text-red"></div> --}}
                                     </div>
@@ -165,7 +174,7 @@
                             </div>
                             <div id="test-l-2" class="content">
                                 <div class="text-center">
-                                    <img src="{{asset('public/icons/zyco.png')}}" style="height:75px">
+                                    <img src="{{asset('icons/zyco.png')}}" style="height:75px">
                                     <h4>Enter your security code</h4>
                                     <small id="sentSuccess" class="text-muted" role="alert">
                                     </small>
@@ -263,7 +272,7 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
-<!-- <script src="{{ asset('public/assets/js/authStepper.js') }}"></script> -->
+<!-- <script src="{{ asset('assets/js/authStepper.js') }}"></script> -->
 <script>
 var stepper1Node = document.querySelector('#stepper1')
 var stepper1 = new Stepper(document.querySelector('#stepper1'))
@@ -283,7 +292,22 @@ stepper1Node.addEventListener('shown.bs-stepper', function(event) {
 <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
 
 <script>
+// Firebase configuration
+var firebaseConfig = {
+    apiKey: "{{ env('FIREBASE_API_KEY') }}",
+    authDomain: "{{ env('FIREBASE_AUTH_DOMAIN') }}",
+    projectId: "{{ env('FIREBASE_PROJECT_ID') }}",
+    storageBucket: "{{ env('FIREBASE_STORAGE_BUCKET') }}",
+    messagingSenderId: "{{ env('FIREBASE_MESSAGING_SENDER_ID') }}",
+    appId: "{{ env('FIREBASE_APP_ID') }}"
+};
 
+// Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+} else {
+    firebase.app(); // if already initialized, use that one
+}
 </script>
 
 <script type="text/javascript">
@@ -701,23 +725,23 @@ function onSubmit(token) {
   
   <div class="row">
   <div class="col-2">
-  <button type="button" class="btn btn-light"><img src="public/icons/google.png" style="height:1.5rem" alt="">
+  <button type="button" class="btn btn-light"><img src="{{asset('icons/google.png')}}" style="height:1.5rem" alt="">
   </button>
   </div>
   <div class="col-2">
-  <button type="button" class="btn btn-dark"><img src="public/icons/windows.png" style="height:1.5rem" alt="">
+  <button type="button" class="btn btn-dark"><img src="{{asset('icons/windows.png')}}" style="height:1.5rem" alt="">
   </button>
   </div>
   <div class="col-2">
-  <button type="button" class="btn" style="background-color: #6001D1"><img src="public/icons/yahoo.png" style="height:1.5rem" alt="">
+  <button type="button" class="btn" style="background-color: #6001D1"><img src="{{asset('icons/yahoo.png')}}" style="height:1.5rem" alt="">
   </button>
   </div>
   <div class="col-2">
-  <button type="button" class="btn btn-light"><img src="public/icons/apple.png" style="height:1.5rem" alt="">
+  <button type="button" class="btn btn-light"><img src="{{asset('icons/apple.png')}}" style="height:1.5rem" alt="">
   </button>
   </div>
   <div class="col-2">
-  <button type="button" class="btn  " style="background-color: #1976D2" #1976D2><img src="public/icons/facebook.png" style="height:1.5rem" alt="">
+  <button type="button" class="btn  " style="background-color: #1976D2" #1976D2><img src="{{asset('icons/facebook.png')}}" style="height:1.5rem" alt="">
   </button>
   </div>
   </div> -->

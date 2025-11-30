@@ -1,10 +1,10 @@
 <!--<a class="brand-link" href="{{route('driver.dashboard')}}">
 
-<img src="{{asset('public/icons/zyco4.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"> -->
+<img src="{{asset('icons/zyco4.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"> -->
 
 
 
-<link rel="stylesheet" href="{{asset('public/assets/css/navbar.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/css/navbar.css')}}" />
 
 <?php
 $dispatch_menu = "class='nav-item d-none d-sm-inline-block'";
@@ -35,7 +35,7 @@ $user_profileInfo = DB::table('users_personalinfo')->where('user_id',Auth::user(
 <nav class="main-header navbar navbar-expand navbar-white navbar-light topbak toptext">
     <!-- <a href="index3.html" class="navbar-brand brand-link">
 
-		<img src="{{asset('public/icons/zyco4.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+		<img src="{{asset('icons/zyco4.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
 
 		style="opacity: .8">
 
@@ -315,7 +315,7 @@ $user_profileInfo = DB::table('users_personalinfo')->where('user_id',Auth::user(
 
             <li class="nav-item dropdown">
                 <a class="nav-link " data-toggle="dropdown" href="#">
-                    <img src="https://app.zyco.nl/public/icons/layoutIcons/chat.png" alt="" class="topnavothericon" />
+                    <img src="https://app.zyco.nl/public/icons/layoutIcons/chat.png')}}" alt="" class="topnavothericon" />
 
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -352,8 +352,8 @@ $user_profileInfo = DB::table('users_personalinfo')->where('user_id',Auth::user(
             <li class="nav-item dropdown">
 
                 <a class="nav-link " data-toggle="dropdown" href="#">
-                    <!--	src="https://app.zyco.nl/public/icons/layoutIcons/active.png"-->
-                    <img src="https://app.zyco.nl/public/icons/layoutIcons/Notification.png" alt=""
+                    <!--	src="https://app.zyco.nl/public/icons/layoutIcons/active.png')}}"-->
+                    <img src="https://app.zyco.nl/public/icons/layoutIcons/Notification.png')}}" alt=""
                         class="topnavothericon" />
                     <div class="notification_number"><?php if ($gCount >= 1) : echo $gCount;
                                                         endif; ?></div>
@@ -406,10 +406,10 @@ $user_profileInfo = DB::table('users_personalinfo')->where('user_id',Auth::user(
                     <div class="p-3 d-flex align-items-center bg-light border-bottom osahan-post-header">
                         <div class="dropdown-list-image mr-3">
                             <?php if (!empty($group_logo)) : ?>
-                            <img class="rounded-circle" src="{{ asset('public/group_photo/'.$group_logo) }}"
+                            <img class="rounded-circle" src="{{ asset('group_photo/'.$group_logo) }}"
                                 alt="Group Logo">
                             <?php else : ?>
-                            <img class="rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                            <img class="rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar3.png')}}"
                                 alt="" />
                             <?php endif; ?>
                         </div>
@@ -456,13 +456,13 @@ $user_profileInfo = DB::table('users_personalinfo')->where('user_id',Auth::user(
                     <img class=" menu-profile-avatar" id="menu-avatar" alt="Avatar"
                         @if(empty($user_profileInfo->profile_picture))
 
-                    src="{{ asset('public/icons/layoutIcons/Group 456.png') }}"
+                    src="{{ asset('icons/layoutIcons/Group 456.png') }}"
 
                     @else
 
-                    src="{{ asset('public/users_personalinfo/'.$user_profileInfo->profile_picture) }}"
+                    src="{{ asset('users_personalinfo/'.$user_profileInfo->profile_picture) }}"
                     @endif>
-                    <img src="https://app.zyco.nl/public/icons/layoutIcons/caret-down.png"
+                    <img src="https://app.zyco.nl/public/icons/layoutIcons/caret-down.png')}}"
                         class="topavatarmiddleicon" />
 
                 </a>
@@ -475,11 +475,11 @@ $user_profileInfo = DB::table('users_personalinfo')->where('user_id',Auth::user(
                             <img class=" dropdown-profile-avatar" id="dropdown-avatar" alt="Avatar"
                                 @if(empty($user_profileInfo->profile_picture))
 
-                            src="{{ asset('public/icons/layoutIcons/Group 456.png') }}"
+                            src="{{ asset('icons/layoutIcons/Group 456.png') }}"
 
                             @else
 
-                            src="{{ asset('public/users_personalinfo/'.$user_profileInfo->profile_picture) }}"
+                            src="{{ asset('users_personalinfo/'.$user_profileInfo->profile_picture) }}"
                             @endif>
                         </div>
                         <div class="col-6 ">

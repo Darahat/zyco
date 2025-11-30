@@ -62,7 +62,7 @@ endif;
             <div class="col center-content">
 
 
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/4-rounded-squares.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/4-rounded-squares.svg')}}" />
 
                 <p>
 
@@ -107,7 +107,7 @@ endif;
             <div class="col center-content">
 
 
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/forward.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/forward.svg')}}" />
 
                 <p>
 
@@ -129,7 +129,7 @@ endif;
                 <div class="left"> </div>
             </div>
             <div class="col center-content">
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/car.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/car.svg')}}" />
                 <p>
                     Vehicles
                 </p>
@@ -145,7 +145,7 @@ endif;
                 <div class="left"> </div>
             </div>
             <div class="col center-content">
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/gift.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/gift.svg')}}" />
                 <p>
                     Classification Package
                 </p>
@@ -161,7 +161,7 @@ endif;
                 <div class="left"> </div>
             </div>
             <div class="col center-content">
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/information.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/information.svg')}}" />
 
                 <p>
 
@@ -181,7 +181,7 @@ endif;
             </div>
             <div class="col center-content">
 
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/admin.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/admin.svg')}}" />
                 <p>
                     {{trans('messages.admin_dashboard.admin_management')}}
                 </p>
@@ -201,7 +201,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/shortlist.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/shortlist.svg')}}" />
                         <p>
                         <p> {{trans('messages.admin_dashboard.admin_users')}}</p>
                         </p>
@@ -216,7 +216,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
                         <p>
                         <p>Site Setup</p>
                         </p>
@@ -237,7 +237,7 @@ endif;
             </div>
             <div class="col center-content">
 
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/web-page.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/web-page.svg')}}" />
                 <p>
                     Form Setup
                 </p>
@@ -261,7 +261,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
 
                         <p>
 
@@ -283,7 +283,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
 
                         <p>
 
@@ -305,7 +305,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
 
                         <p>
 
@@ -327,7 +327,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
 
                         <p>
 
@@ -350,7 +350,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
 
                         <p>
 
@@ -373,7 +373,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
 
                         <p>
 
@@ -395,7 +395,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
 
                         <p>
 
@@ -417,7 +417,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
 
                         <p>
 
@@ -440,7 +440,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
 
                         <p>
 
@@ -467,7 +467,7 @@ endif;
             </div>
             <div class="col center-content">
 
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/web-page.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/web-page.svg')}}" />
                 <p>
                     Template Manager
                 </p>
@@ -489,7 +489,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
                         <p>Email Template</p>
                     </div>
                 </div>
@@ -504,7 +504,7 @@ endif;
                         <div class="left"> </div>
                     </div>
                     <div class="col center-content">
-                        <img class="nav-icon" src="{{asset('public/icons/layoutIcons/survey.svg')}}" />
+                        <img class="nav-icon" src="{{asset('icons/layoutIcons/survey.svg')}}" />
                         <p>SMS Template</p>
                     </div>
                 </div>
@@ -525,7 +525,7 @@ endif;
                 <div class="left"> </div>
             </div>
             <div class="col center-content">
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/coronavirus.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/coronavirus.svg')}}" />
 
                 <p>
 
@@ -555,7 +555,7 @@ endif;
                 <div class="left"> </div>
             </div>
             <div class="col center-content">
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/currency.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/currency.svg')}}" />
 
                 <p>
 
@@ -576,7 +576,7 @@ endif;
                 <div class="left"> </div>
             </div>
             <div class="col center-content">
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/currency.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/currency.svg')}}" />
 
                 <p>
 
@@ -598,7 +598,7 @@ endif;
                 <div class="left"> </div>
             </div>
             <div class="col center-content">
-                <img class="nav-icon" src="{{asset('public/icons/layoutIcons/web-coding.svg')}}" />
+                <img class="nav-icon" src="{{asset('icons/layoutIcons/web-coding.svg')}}" />
 
                 <p>
 

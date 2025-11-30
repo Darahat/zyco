@@ -105,7 +105,7 @@
                  </td>
                  <td>
                      <div class="dropdown">
-                         <img src="{{asset('public/vehicle_classification/'.$row->badge_icon)}}" alt=""
+                         <img src="{{asset('vehicle_classification/'.$row->badge_icon)}}" alt=""
                              style="height: 40px">
                          <button class="btn  btn-outline-default btn-sm dropdown-toggle rounded-pill" type="button"
                              id="uploadImage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -1,7 +1,7 @@
 @extends('backend.web_admin')
 @section('content')
 
-<link rel="stylesheet" href="{{asset('public/assets/css/user-profile-update.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/css/user-profile-update.css')}}" />
 
 
 <div class="content-wrapper ">

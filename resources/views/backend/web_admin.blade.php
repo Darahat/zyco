@@ -6,14 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ $page_title }}</title>
         {{-- custom auth pages csss --}}
-        {{-- <link rel="stylesheet" href="{{ asset('public/assets/css/auth.css') }}"> --}}
+        {{-- <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}"> --}}
         <!-- Google Font: Source Sans Pro -->
-        <link rel="stylesheet" href="{{ asset('public/assets/plugins/bs-stepper/css/bs-stepper.min.css')}}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/bs-stepper/css/bs-stepper.min.css')}}">
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         {{-- custom CSS --}}
-        <link rel="stylesheet" href="{{ asset('public/assets/css/admin.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <!-- Font Awesome -->
@@ -26,55 +26,55 @@
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
         <!-- Toastr -->
-        <link rel="stylesheet" href="{{ asset('public/assets/plugins/toastr/toastr.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
         <!-- DataTables -->
         <link rel="stylesheet"
-            href="{{ asset('public/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+            href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
         <link rel="stylesheet"
-            href="{{ asset('public/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+            href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
         <link rel="stylesheet"
-            href="{{ asset('public/assets/plugins/datatables-searchbuilder/css/searchBuilder.bootstrap4.min.css') }}">
+            href="{{ asset('assets/plugins/datatables-searchbuilder/css/searchBuilder.bootstrap4.min.css') }}">
         <link rel="stylesheet"
-            href="{{ asset('public/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+            href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
         <script type="text/javascript"
             src="https://cdn.datatables.net/colreorder/1.5.6/css/colReorder.dataTables.min.css"></script>
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Tempusdominus Bootstrap 4 -->
         <link rel="stylesheet"
-            href="{{ asset('public/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+            href="{{ asset('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
         <!-- iCheck -->
-        <link rel="stylesheet" href="{{ asset('public/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
         <!-- JQVMap -->
-        <link rel="stylesheet" href="{{ asset('public/assets/plugins/jqvmap/jqvmap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/jqvmap/jqvmap.min.css') }}">
         <!-- Theme style -->
-        <link rel="stylesheet" href="{{ asset('public/assets/dist/css/adminlte.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
         <!-- summernote -->
-        <link rel="stylesheet" href="{{ asset('public/assets/plugins/summernote/summernote-bs4.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
         <!-- overlayScrollbars -->
         <link rel="stylesheet"
-            href="{{asset('public/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+            href="{{asset('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
         <!-- Daterange picker -->
-        <link rel="stylesheet" href="{{ asset('public/assets/plugins/daterangepicker/daterangepicker.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
         <!-- summernote -->
-        <link rel="stylesheet" href="{{ asset('public/assets/plugins/summernote/summernote-bs4.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
         <!-- jQuery -->
 
-        <script src="{{ asset('public/assets/plugins/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 
-        <link rel="stylesheet" href="{{asset('public/assets/css/user-profile-update.css')}}" />
+        <link rel="stylesheet" href="{{asset('assets/css/user-profile-update.css')}}" />
         <!-- jQuery UI 1.11.4 -->
 
-        <script src="{{ asset('public/assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <!-- DataTables  & Plugins -->
 
         <!-- MDB -->
 
         {{-- <script  type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"></script> --}}
 
-        <link rel="stylesheet" href="{{ asset('public/assets/plugins/colorpicker/jquery.colorpicker.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/plugins/colorpicker/jquery.colorpicker.css') }}" />
 
-        <script src="{{ asset('public/assets/plugins/colorpicker/jquery.colorpicker.js') }}"></script>
+        <script src="{{ asset('assets/plugins/colorpicker/jquery.colorpicker.js') }}"></script>
 
     </head>
 
@@ -122,7 +122,7 @@
         <div class="wrapper">
             <!-- Preloader -->
             <div class="preloader flex-column justify-content-center align-items-center">
-                <img class="animation__shake" src="{{ asset('public/icons/zyco4.png') }}" alt="AdminLTELogo"
+                <img class="animation__shake" src="{{ asset('icons/zyco4.png') }}" alt="AdminLTELogo"
                     height="100" width="100">
             </div>
 
@@ -253,59 +253,59 @@
 
             <!-- Bootstrap 4 -->
 
-            <script src="{{ asset('public/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
             <!-- DataTables  & Plugins -->
-            <script src="{{ asset('public/assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}">
+            <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}">
             </script>
-            <script src="{{ asset('public/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}">
-            </script>
-            <script
-                src="{{ asset('public/assets/plugins/datatables-searchbuilder/js/dataTables.searchBuilder.min.js') }}">
+            <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}">
             </script>
             <script
-                src="{{ asset('public/assets/plugins/datatables-searchbuilder/js/searchBuilder.bootstrap4.min.js') }}">
+                src="{{ asset('assets/plugins/datatables-searchbuilder/js/dataTables.searchBuilder.min.js') }}">
             </script>
-            <script src="{{ asset('public/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/jszip/jszip.min.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+            <script
+                src="{{ asset('assets/plugins/datatables-searchbuilder/js/searchBuilder.bootstrap4.min.js') }}">
+            </script>
+            <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/jszip/jszip.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
+            <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
             <script src="https://cdn.datatables.net/colreorder/1.5.6/js/dataTables.colReorder.min.js"></script>
 
             {{-- custom js  --}}
             <!-- ChartJS -->
-            <script src="{{ asset('public/assets/plugins/chart.js/Chart.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}"></script>
             <!-- Sparkline -->
-            <script src="{{ asset('public/assets/plugins/sparklines/sparkline.js') }}"></script>
+            <script src="{{ asset('assets/plugins/sparklines/sparkline.js') }}"></script>
             <!-- JQVMap -->
-            <script src="{{ asset('public/assets/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-            <script src="{{ asset('public/assets/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+            <script src="{{ asset('assets/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
             <!-- jQuery Knob Chart -->
-            <script src="{{ asset('public/assets/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
             <!-- daterangepicker -->
-            <script src="{{ asset('public/assets/plugins/moment/moment.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
 
-            <script src="{{ asset('public/assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
+            <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
 
             <!-- Tempusdominus Bootstrap 4 -->
 
             <script
-                src="{{ asset('public/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}">
+                src="{{ asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}">
             </script>
 
             <!-- Summernote -->
 
-            <script src="{{ asset('public/assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
             <!-- overlayScrollbars -->
 
-            <script src="{{ asset('public/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}">
+            <script src="{{ asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}">
             </script>
 
 
@@ -314,15 +314,15 @@
 
             <!-- Toastr -->
 
-            <script src="{{ asset('public/assets/plugins/toastr/toastr.min.js') }}"></script>
+            <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
 
             <!-- AdminLTE App -->
 
-            <script src="{{ asset('public/assets/dist/js/adminlte.js') }}"></script>
+            <script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
 
             <!-- AdminLTE for demo purposes -->
 
-            {{--<script src="{{ asset('public/assets/dist/js/demo.js') }}"></script>--}}
+            {{--<script src="{{ asset('assets/dist/js/demo.js') }}"></script>--}}
 
             <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js">
@@ -331,17 +331,17 @@
             <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
             <!-- 
-<script src="{{ asset('public/assets/dist/js/pages/dashboard.js') }}"></script>
+<script src="{{ asset('assets/dist/js/pages/dashboard.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/gh/RubaXa/Sortable/Sortable.min.js"></script>
  <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
  <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js" type = "module"></script>
  <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-analytics.js" type="module"> </script>
  <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js" type = "module"></script>
  <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js" type="module"></script>
- <script type="module" src="{{ asset('public/assets/js/admin.js') }}"></script> 
+ <script type="module" src="{{ asset('assets/js/admin.js') }}"></script> 
 <script src="https://zyco-bv.firebaseio.com/"></script>-->
 
-            <link rel="stylesheet" href="{{ asset('public/assets/plugins/bs-stepper/js/bs-stepper.min.js')}}">
+            <link rel="stylesheet" href="{{ asset('assets/plugins/bs-stepper/js/bs-stepper.min.js')}}">
 
 
             <script>

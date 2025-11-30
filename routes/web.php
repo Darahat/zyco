@@ -1,10 +1,11 @@
 <?php
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/clear-cache', function () {
 	Artisan::call('cache:clear');
 	return "Cache is cleared";
 });
-
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\CustomAuth2Controller;
@@ -61,11 +62,12 @@ use App\Http\Controllers\ThemeCustomizeController;
 	*/
 
 Route::get('google-autocomplete', [GoogleController::class, 'index']);
-Route::group(['domain' => 'zyco.nl'], function () {
-	// Route::get('/', [HomeController::class, 'home']);
-	Route::get('/', [HelperController::class, 'redirectTosite'])->name('redirectTosite');
-	// return redirect()->away('https://zyco.nl/site');
+
+// Root route - redirect to login for localhost
+Route::get('/', function () {
+	return redirect()->route('login');
 });
+
 Route::get('/clear-cache', function () {
 	Artisan::call('cache:clear');
 	dd("cache clear all");

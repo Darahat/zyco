@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Admin;
-use App\Models\User;
-use Illuminate\Http\File;
-use Auth;
-use Session;
-
+use Illuminate\Support\Facades\Auth;
+ 
 class DispatcherController extends Controller
 {
+	
+	protected $page_title;
+
 	public function __construct()
 	{
 		$this->page_title = 'Dispatcher Panel';
@@ -45,11 +43,17 @@ class DispatcherController extends Controller
 		// exit;
 		if (Auth::guard('admin')->check()) {
 			$result = DB::table('admins')->where('id', Auth::guard('admin')->user()->id)->first();
+			$basicInfo = $result; // For admin, basicInfo is same as result
+			$personalInfo = (object)['profile_picture' => null, 'street_name' => null]; // Empty object for admin
 			$documents = array();
+			$user_profileInfo = null;
+			$users_bankinfo = null;
 		} else if (Auth::user()->id != null) {
 
 			$result =	DB::table('users')->where('id', Auth::user()->id)->first();
+			$basicInfo = $result;
 			$user_profileInfo =	DB::table('users_personalinfo')->where('user_id', Auth::user()->id)->first();
+			$personalInfo = $user_profileInfo;
 			$users_bankinfo =	DB::table('users_bankinfo')->where('user_id', Auth::user()->id)->first();
 			// ->leftJoin('users_personalinfo', 'users.id', '=', 'users_personalinfo.user_id')
 			// ->leftJoin('users_bankinfo', 'users_personalinfo.user_id', '=', 'users_bankinfo.user_id')->where('users_bankinfo.user_id',Auth::user()->id)
@@ -59,12 +63,12 @@ class DispatcherController extends Controller
 
 		}
 
-		return view('backend.common.my_profile', [
+		return view('backend.common.my_profile2', [
 			'page_title' => $this->page_title,
 			'page_header' => 'My Profile',
 			'main_menu' => 'profile',
 
-		], with(compact('result', 'documents', 'user_profileInfo', 'users_bankinfo')));
+		], with(compact('result', 'documents', 'user_profileInfo', 'users_bankinfo', 'basicInfo', 'personalInfo')));
 	}
 	public function dispatch_form()
 	{
@@ -100,12 +104,12 @@ class DispatcherController extends Controller
 	/**
 	 * Add a New Booking
 	 *
-	 * @param array $request  Input values
+	 * @param Request $request  Input values
 	 * @return redirect     to Country view
 	 */
 	public function add(Request $request)
 	{
-		if (!$_POST) {
+		if (!request()->isMethod('post')) {
 			$vehicle_type = DB::table('vehicle_type')->orderBy('id', 'ASC')->get();
 			$rider_info = DB::table('users')->where('user_type', 'Rider')->orderBy('id', 'ASC')->get();
 			$language_info = DB::table('language')->where('status', 'Active')->orderBy('id', 'ASC')->get();
@@ -116,20 +120,20 @@ class DispatcherController extends Controller
 				'main_menu' => 'dispatch',
 
 			], with(compact('vehicle_type', 'rider_info', 'language_info')));
-		} else if ($request->submit) {
+		} else if (request()->has('submit')) {
 
-			$validatedData = $request->validate([
+			$validatedData = request()->validate([
 				'short_name' => 'required|unique:country',
 				'long_name'  => 'required|unique:country',
 				'phone_code' => 'required',
 			]);
 
 			$post = array();
-			$post['short_name'] = $request->short_name;
-			$post['long_name'] = $request->long_name;
-			$post['iso3'] = $request->iso3;
-			$post['num_code'] = $request->num_code;
-			$post['phone_code'] = $request->phone_code;
+			$post['short_name'] = request()->input('short_name');
+			$post['long_name'] = request()->input('long_name');
+			$post['iso3'] = request()->input('iso3');
+			$post['num_code'] = request()->input('num_code');
+			$post['phone_code'] = request()->input('phone_code');
 			$insertData = DB::table('country')->insert($post);
 
 			if ($insertData) {
@@ -162,11 +166,11 @@ class DispatcherController extends Controller
 	 */
 	public function update(Request $request)
 	{
-		if (!$_POST) {
+		if (!request()->isMethod('post')) {
 
 			if (Auth::guard('admin')->check()) {
 
-				$result = DB::table('country')->where('id', $request->id)->first();
+				$result = DB::table('country')->where('id', request()->input('id'))->first();
 
 				return view('backend.country.edit', [
 					'page_title' => $this->page_title,
@@ -174,9 +178,9 @@ class DispatcherController extends Controller
 					'main_menu' => 'dispatch',
 				], with(compact('result')));
 			}
-		} else if ($request->submit) {
+		} else if (request()->has('submit')) {
 
-			$validatedData = $request->validate([
+			$validatedData = request()->validate([
 				'short_name' => 'required',
 				'long_name'  => 'required',
 				'phone_code' => 'required',
@@ -184,13 +188,13 @@ class DispatcherController extends Controller
 
 			//return response()->json( $validatedData );
 
-			$id = $request->id;
+			$id = request()->input('id');
 			$post = array();
-			$post['short_name'] = $request->short_name;
-			$post['long_name'] = $request->long_name;
-			$post['iso3'] = $request->iso3;
-			$post['num_code'] = $request->num_code;
-			$post['phone_code'] = $request->phone_code;
+			$post['short_name'] = request()->input('short_name');
+			$post['long_name'] = request()->input('long_name');
+			$post['iso3'] = request()->input('iso3');
+			$post['num_code'] = request()->input('num_code');
+			$post['phone_code'] = request()->input('phone_code');
 			$UpdateData = DB::table('country')->where('id', $id)->update($post);
 
 			$notification = array(
@@ -219,7 +223,7 @@ class DispatcherController extends Controller
 
 		if (Auth::guard('admin')->check()) {
 
-			$countryData = DB::table('country')->where('id', $request->id)->first();
+			$countryData = DB::table('country')->where('id', request()->input('id'))->first();
 			$country_code = $countryData->phone_code;
 
 			$user = DB::table('users')->where('country_code', $country_code)->first();
@@ -230,7 +234,7 @@ class DispatcherController extends Controller
 					'alert-type' => 'error'
 				);
 			} else {
-				$delete = DB::table('country')->where('id', $request->id)->delete();
+				$delete = DB::table('country')->where('id', request()->input('id'))->delete();
 				$notification = array(
 					'status' => 'Country Information Deleted Successfully',
 					'alert-type' => 'success'
@@ -246,4 +250,6 @@ class DispatcherController extends Controller
 			return redirect()->back()->with($notification);
 		}
 	}
-}
+} 
+ // ← Creates array
+// Later: $request->only(...) // ← Tries to use as object

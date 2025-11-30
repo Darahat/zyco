@@ -1,7 +1,7 @@
 @extends('backend.web_admin')
 @section('content')
 
-<link rel="stylesheet" href="{{asset('public/assets/css/user-profile-update.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/css/user-profile-update.css')}}" />
 
 
 <div class="content-wrapper ">
@@ -352,7 +352,7 @@
 
 
         <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
-        <!-- <script src="{{ asset('public/assets/js/authStepper.js') }}"></script> -->
+        <!-- <script src="{{ asset('assets/js/authStepper.js') }}"></script> -->
         <script>
         var stepper1Node = document.querySelector('#stepper1')
         var stepper1 = new Stepper(document.querySelector('#stepper1'))

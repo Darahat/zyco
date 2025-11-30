@@ -12,13 +12,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Hashing\BcryptHasher;
 use App\Http\Controllers\MyTestMail;
 use App\Models\User;
-use Hash;
-use Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class CustomAuthController extends Controller
 {
+    private $my_test_mail;
+
     public function __construct(MyTestMail $myTestMail)
     {
         $this->my_test_mail = $myTestMail;
@@ -128,16 +130,17 @@ class CustomAuthController extends Controller
 
     public function check_user_exist(Request $request)
     {
-        // dd($request->all());
-        // $check = DB::table($request->table)->where($request->field, '=', $request->value)->orWhere('mobile_number', '=', $request->value)->first();
-        // if ($check) {
-        //     return $check->id;
-        // } else {
-        //     return null;
-        // }
+        $table = $request->input('table');
+        $field = $request->input('field');
+        $value = $request->input('value');
+        $need = $request->input('need');
 
+        // Validate required parameters
+        if (!$table || !$field || !$value || !$need) {
+            return response()->json(['error' => 'Missing required parameters'], 400);
+        }
 
-        $check = DB::table($request->table)->where($request->field, '=', $request->value)->value($request->need);
+        $check = DB::table($table)->where($field, '=', $value)->value($need);
 
         if ($check) {
             return $check;
@@ -148,8 +151,15 @@ class CustomAuthController extends Controller
 
     public function check_user_exist2(Request $request)
     {
-        // dd($request->all());
-        $check = DB::table($request->table)->where($request->field, '=', $request->value)->orWhere('mobile_number', '=', $request->value)->first();
+        $table = $request->input('table');
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        if (!$table || !$field || !$value) {
+            return response()->json(['error' => 'Missing required parameters'], 400);
+        }
+
+        $check = DB::table($table)->where($field, '=', $value)->orWhere('mobile_number', '=', $value)->first();
         if ($check) {
             return $check->mobile_number;
         } else {
@@ -158,25 +168,39 @@ class CustomAuthController extends Controller
     }
     public function check_user_exist3(Request $request)
     {
+        $table = $request->input('table');
+        $field1 = $request->input('field1');
+        $value1 = $request->input('value1');
+        $value2 = $request->input('value2');
 
-        $check = DB::table($request->table)->where($request->field1, '=', $request->value1)->first();
+        if (!$table || !$field1 || !$value1 || !$value2) {
+            return response()->json(['error' => 'Missing required parameters'], 400);
+        }
+
+        $check = DB::table($table)->where($field1, '=', $value1)->first();
 
         if ($check) {
-
-            if (Hash::check($request->value2, $check->password)) {
-
+            if (Hash::check($value2, $check->password)) {
                 return $check->mobile_number;
             } else {
-
                 return null;
             }
         }
+        
+        return null;
     }
 
     public function check_data_exist(Request $request)
     {
-        // dd($request->all());
-        $check = DB::table($request->table)->where($request->field, '=', $request->value)->first();
+        $table = $request->input('table');
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        if (!$table || !$field || !$value) {
+            return response()->json(['error' => 'Missing required parameters'], 400);
+        }
+
+        $check = DB::table($table)->where($field, '=', $value)->first();
         if ($check) {
             return $check->id;
         } else {
@@ -185,8 +209,15 @@ class CustomAuthController extends Controller
     }
     public function check_data_exist2(Request $request)
     {
-        // dd($request->all());
-        $check = DB::table($request->table)->where($request->field, '=', $request->value)->first();
+        $table = $request->input('table');
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        if (!$table || !$field || !$value) {
+            return response()->json(['error' => 'Missing required parameters'], 400);
+        }
+
+        $check = DB::table($table)->where($field, '=', $value)->first();
         if ($check) {
             return $check->mobile_number;
         } else {
@@ -207,19 +238,27 @@ class CustomAuthController extends Controller
 
     public function updateAuthData(Request $request)
     {
+        $table = $request->input('table');
+        $field = $request->input('field');
+        $value = $request->input('value');
+        $mobileNumber = $request->input('mobile_number');
 
-        if ($request->field == 'password') {
-            $post[$request->field] = Hash::make($request->value);
-        } else {
-            $post[$request->field] = $request->value;
+        if (!$table || !$field || !$value || !$mobileNumber) {
+            return response()->json(['error' => 'Missing required parameters'], 400);
         }
-        $success = DB::table($request->table)->where('mobile_number', $request->mobile_number)->update($post);
+
+        if ($field == 'password') {
+            $post[$field] = Hash::make($value);
+        } else {
+            $post[$field] = $value;
+        }
+        $success = DB::table($table)->where('mobile_number', $mobileNumber)->update($post);
         if ($success) {
             $notification = array(
                 'status' => 'Data Updated  Successfully',
                 'alert-type' => 'success'
             );
-            $updatedData = DB::table($request->table)->where('mobile_number', $request->mobile_number)->get();
+            $updatedData = DB::table($table)->where('mobile_number', $mobileNumber)->get();
             // return $success;
             // dd($updatedData);
             return redirect()->back()->with($notification);
@@ -253,6 +292,7 @@ class CustomAuthController extends Controller
         $post = array();
         if ($validation) {
             $user = User::create([
+                'name' => $data['first_name'] . ' ' . $data['last_name'],
                 'user_type' => $data['user_type'],
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -310,19 +350,16 @@ class CustomAuthController extends Controller
         }
 
         if ($success) {
+            // Send registration email
+            $mailRequest = new Request([
+                'table' => 'users',
+                'field' => 'email',
+                'value' => $data['email']
+            ]);
+            $this->my_test_mail->RegistrationComplete($mailRequest);
 
-
-
-            $this->my_test_mail->RegistrationComplete('users', 'email', $data['email']);
-
-
-
-            $request = array();
-            // $credentials = $request->only($data['email'], $data['password']);
-            if (Auth::attempt(
-                $data['email'],
-                $data['password']
-            )) {
+            // Attempt to login after registration
+            if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
                 $notification = array(
                     'status' => 'Signed in',
                     'alert-type' => 'Success'

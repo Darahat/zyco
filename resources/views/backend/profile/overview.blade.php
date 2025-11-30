@@ -9,10 +9,10 @@
      <div>
 
          @if(empty($personalInfo->profile_picture))
-         <img class="avatar-edit" id="avatar" src="{{ asset('public/icons/avatar1.png') }} " alt="Avatar">
+         <img class="avatar-edit" id="avatar" src="{{ asset('icons/avatar1.png') }} " alt="Avatar">
          @else
          <img class="avatar-edit" id="avatar"
-             src="{{ asset('public/users_personalinfo/'.$personalInfo->profile_picture) }} " alt="Avatar">
+             src="{{ asset('users_personalinfo/'.$personalInfo->profile_picture) }} " alt="Avatar">
          @endif
 
          <div class="avatar-edit-btn justify-content-center" data-toggle="modal" data-target="#profilepicturemodal">
@@ -47,10 +47,10 @@
                      <input type="text" hidden value="users_personalinfo" name="table_name">
                      <input type="text" hidden value="{{$personalInfo->id}}" name="id">
                      @if(empty($personalInfo->profile_picture))
-                     <img class="avatar-edit" id="avatar" src="{{ asset('public/icons/avatar1.png') }} " alt="Avatar">
+                     <img class="avatar-edit" id="avatar" src="{{ asset('icons/avatar1.png') }} " alt="Avatar">
                      @else
                      <img class="avatar-edit" id="avatar"
-                         src="{{ asset('public/users_personalinfo/'.$personalInfo->profile_picture) }} " alt="Avatar">
+                         src="{{ asset('users_personalinfo/'.$personalInfo->profile_picture) }} " alt="Avatar">
                      @endif
                      <input type="file" name="image" id="image">
                  </div>
