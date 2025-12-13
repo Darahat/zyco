@@ -32,7 +32,7 @@ class VehicleClassificationController extends Controller
         'main_menu' => 'admin',
         'page_header' => 'Vehicle Classification',
 
-      ], with(compact('result')));
+      ], compact('result'));
     } else {
       $notification = array(
         'status' => 'You are not allowed to access',
@@ -116,7 +116,7 @@ class VehicleClassificationController extends Controller
           'page_title' => $this->page_title,
           'main_menu' => 'admin',
           'page_header' => 'Update vehicle classification Information',
-        ], with(compact('result')));
+        ], compact('result'));
       }
     } else if ($request->submit) {
 

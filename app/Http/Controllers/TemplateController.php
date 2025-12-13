@@ -47,7 +47,7 @@ class TemplateController extends Controller
 			'page_title' => $this->page_title,
 			'main_menu' => 'admin',
 			'page_header' => 'Template Type',
-		], with(compact('result')));
+		], compact('result'));
 	}
 
 	public function templateEmail()
@@ -64,7 +64,7 @@ class TemplateController extends Controller
 			'page_title' => $this->page_title,
 			'main_menu' => 'admin',
 			'page_header' => 'Email Template',
-		], with(compact('result', 'typeList')));
+		], compact('result', 'typeList'));
 	}
 
 
@@ -83,7 +83,7 @@ class TemplateController extends Controller
 			'page_title' => $this->page_title,
 			'main_menu' => 'admin',
 			'page_header' => 'SMS Template',
-		], with(compact('result', 'typeList')));
+		], compact('result', 'typeList'));
 	}
 
 
@@ -101,7 +101,7 @@ class TemplateController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Email Template Edit',
-			], with(compact('result', 'codeList')));
+			], compact('result', 'codeList'));
 		} else if ($request->submit) {
 
 			$post = array();
@@ -140,7 +140,7 @@ class TemplateController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'SMS Template Edit',
-			], with(compact('result', 'codeList')));
+			], compact('result', 'codeList'));
 		} else if ($request->submit) {
 
 			$post = array();
@@ -174,7 +174,7 @@ class TemplateController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Personal Form Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 
 			$post = array();
@@ -222,7 +222,7 @@ class TemplateController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Basic Form Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 
 			$post = array();

@@ -429,7 +429,7 @@ class CustomAuthController extends Controller
             return view('backend.menu', [
                 'page_title' => 'Taxi Plaza',
                 'page_header' => 'Menu'
-            ], with(compact('menu_list')));
+            ], compact('menu_list'));
         }
 
         $notification = array(
@@ -446,7 +446,7 @@ class CustomAuthController extends Controller
             return view('backend.menu_sub', [
                 'page_title' => 'Taxi Plaza',
                 'page_header' => 'Sub Menu'
-            ], with(compact('menu_list')));
+            ], compact('menu_list'));
         }
 
         $notification = array(
@@ -463,7 +463,7 @@ class CustomAuthController extends Controller
             return view('backend.menu_child', [
                 'page_title' => 'Taxi Plaza',
                 'page_header' => 'Child Menu'
-            ], with(compact('menu_list')));
+            ], compact('menu_list'));
         }
 
         $notification = array(
@@ -570,7 +570,7 @@ class CustomAuthController extends Controller
             return view('backend.pages', [
                 'page_title' => 'Taxi Plaza',
                 'page_header' => 'Pages'
-            ], with(compact('page_list')));
+            ], compact('page_list'));
         }
 
         $notification = array(
@@ -628,7 +628,7 @@ class CustomAuthController extends Controller
             return view('backend.pages_edit', [
                 'page_title' => 'Taxi Plaza',
                 'page_header' => 'Page'
-            ], with(compact('page')));
+            ], compact('page'));
         }
 
         $notification = array(

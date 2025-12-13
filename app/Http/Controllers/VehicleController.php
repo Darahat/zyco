@@ -69,7 +69,7 @@ class VehicleController extends Controller
 
 			'main_menu' => 'settings',
 
-		], with(compact('vehicleInfo', 'vehicle_type', 'vehicle_make', 'vehicle_model', 'vehicle_classifications', 'drivers')));
+		], compact('vehicleInfo', 'vehicle_type', 'vehicle_make', 'vehicle_model', 'vehicle_classifications', 'drivers'));
 	}
 	public function indexadmin()
 	{
@@ -103,7 +103,7 @@ class VehicleController extends Controller
 
 			'main_menu' => 'informations',
 
-		], with(compact('vehicleInfo', 'vehicle_type', 'vehicle_make', 'vehicle_model', 'vehicle_classifications', 'drivers')));
+		], compact('vehicleInfo', 'vehicle_type', 'vehicle_make', 'vehicle_model', 'vehicle_classifications', 'drivers'));
 	}
 	public function getDetails(Request $request)
 	{
@@ -249,7 +249,7 @@ class VehicleController extends Controller
 
 			'main_menu' => 'admin_settings',
 
-		], with(compact('vehicles_classification', 'vehicles_make', 'vehicles_model', 'vehicles_type', 'drivers')));
+		], compact('vehicles_classification', 'vehicles_make', 'vehicles_model', 'vehicles_type', 'drivers'));
 	}
 
 	/**
@@ -292,7 +292,7 @@ class VehicleController extends Controller
 
 				'main_menu' => 'admin',
 
-			], with(compact('vehicle_make', 'vehicle_model', 'vehicle_classifications', 'drivers', 'vehicle_type')));
+			], compact('vehicle_make', 'vehicle_model', 'vehicle_classifications', 'drivers', 'vehicle_type'));
 		} else if ($request->submit) {
 			$validatedData = $request->validate([
 
@@ -484,7 +484,7 @@ class VehicleController extends Controller
 				'page_header' => 'Update Vehicle Information',
 				'main_menu' => 'admin',
 
-			], with(compact('result', 'vehicle_make', 'vehicle_model', 'vehicle_classifications', 'drivers', 'vehicle_type')));
+			], compact('result', 'vehicle_make', 'vehicle_model', 'vehicle_classifications', 'drivers', 'vehicle_type'));
 		} else if ($request->submit) {
 
 			dd($request->all());
@@ -850,6 +850,6 @@ class VehicleController extends Controller
 			'page_header' => 'Vat Information',
 
 
-		], with(compact('result')));
+		], compact('result'));
 	}
 }

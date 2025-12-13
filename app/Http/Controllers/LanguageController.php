@@ -27,7 +27,7 @@ class LanguageController extends Controller
         'page_title' => $this->page_title,
         'main_menu' => 'informations',
         'page_header' => 'Language',
-      ], with(compact('result')));
+      ], compact('result'));
     } else {
       $notification = array(
         'status' => 'You are not allowed to access',
@@ -97,7 +97,7 @@ class LanguageController extends Controller
           'page_title' => $this->page_title,
           'main_menu' => 'informations',
           'page_header' => 'Update Language Information',
-        ], with(compact('result')));
+        ], compact('result'));
       }
     } else if ($request->submit) {
       $validatedData = $request->validate([

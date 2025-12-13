@@ -29,7 +29,7 @@ class FeesController extends Controller
       'main_menu' => 'admin',
       'page_header' => 'Fees',
 
-    ], with(compact('result')));
+    ], compact('result'));
   }
 
   /**
@@ -102,7 +102,7 @@ class FeesController extends Controller
         'page_title' => $this->page_title,
         'main_menu' => 'admin',
         'page_header' => 'Update Fees Information',
-      ], with(compact('result')));
+      ], compact('result'));
     } else {
 
       $validatedData = $request->validate([

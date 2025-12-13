@@ -28,7 +28,7 @@ class FormConfigController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Site Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 			$post = array();
 			$id = $request->id;
@@ -72,7 +72,7 @@ class FormConfigController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Bank Form Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 			$post = array();
 			$id = $request->id;
@@ -119,7 +119,7 @@ class FormConfigController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Vehicle Form Configuration',
-			], with(compact('result', 'vehicle_type', 'vehicle_make', 'drivers')));
+			], compact('result', 'vehicle_type', 'vehicle_make', 'drivers'));
 		} else if ($request->submit) {
 			$post = array();
 			$id = $request->id;
@@ -157,7 +157,7 @@ class FormConfigController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Group Form Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 			$post = array();
 			$id = $request->id;
@@ -195,7 +195,7 @@ class FormConfigController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Company Form Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 			$post = array();
 			$id = $request->id;
@@ -233,7 +233,7 @@ class FormConfigController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Vat Form Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 			$post = array();
 			$id = $request->id;
@@ -271,7 +271,7 @@ class FormConfigController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Postal Form Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 			$post = array();
 			$id = $request->id;
@@ -309,7 +309,7 @@ class FormConfigController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Document Form Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 			$post = array();
 			$id = $request->id;
@@ -347,7 +347,7 @@ class FormConfigController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Personal Form Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 			$post = array();
 			$id = $request->id;
@@ -385,7 +385,7 @@ class FormConfigController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Basic Form Configuration',
-			], with(compact('result')));
+			], compact('result'));
 		} else if ($request->submit) {
 			$post = array();
 			$id = $request->id;

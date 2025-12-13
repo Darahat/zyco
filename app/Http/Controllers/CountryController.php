@@ -29,7 +29,7 @@ class CountryController extends Controller
         'main_menu' => 'admin',
         'page_header' => 'Country',
 
-      ], with(compact('result')));
+      ], compact('result'));
     } else {
       $notification = array(
         'status' => 'You are not allowed to access',
@@ -111,7 +111,7 @@ class CountryController extends Controller
           'page_title' => $this->page_title,
           'main_menu' => 'admin',
           'page_header' => 'Update Country Information',
-        ], with(compact('result')));
+        ], compact('result'));
       }
     } else if ($request->submit) {
 

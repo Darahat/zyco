@@ -32,7 +32,7 @@ class AdminController extends Controller
             'page_title' => 'Taxi Plaza',
             'main_menu' => 'admin',
             'page_header' => 'Admin List'
-        ], with(compact('admins', 'countries')));
+        ], compact('admins', 'countries'));
     }
 
     public function getAdminDetails(Request $request)
@@ -228,7 +228,7 @@ class AdminController extends Controller
             'page_title' => 'Taxi Plaza',
             'main_menu' => 'admin',
             'page_header' => 'Edit Form'
-        ], with(compact('Admindata', 'countries')));
+        ], compact('Admindata', 'countries'));
     }
     public function editAdmin(Request $request)
     {

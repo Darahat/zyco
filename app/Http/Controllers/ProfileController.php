@@ -30,7 +30,7 @@ class ProfileController extends Controller
 				'page_title' => $this->page_title,
 				'page_header' => 'Country',
 				'main_menu' => 'dispatch',
-			], with(compact('result')));
+			], compact('result'));
 		} else {
 			$notification = array(
 				'status' => 'You are not allowed to access',
@@ -50,7 +50,7 @@ class ProfileController extends Controller
 			'page_title' => $this->page_title,
 			'page_header' => 'Basic Update',
 			'main_menu' => 'dispatch',
-		], with(compact('basicInfo', 'personalInfo', 'time_zones', 'languagelist')));
+		], compact('basicInfo', 'personalInfo', 'time_zones', 'languagelist'));
 	}
 	public function profileUpdate()
 	{
@@ -73,7 +73,7 @@ class ProfileController extends Controller
 			'page_header' => '',
 			'main_menu' => 'settings',
 			'time_zones' => $time_zones,
-		], with(compact('personalInfo', 'basicInfo', 'bankInfo', 'documentInfo', 'vehicleInfo', 'companyInfo', 'companyVatInfo', 'languagelist', 'vehicle_type', 'vehicle_make', 'vehicle_model', 'drivers')));
+		], compact('personalInfo', 'basicInfo', 'bankInfo', 'documentInfo', 'vehicleInfo', 'companyInfo', 'companyVatInfo', 'languagelist', 'vehicle_type', 'vehicle_make', 'vehicle_model', 'drivers'));
 	}
 	/**
 	 * Update Country Details
@@ -260,7 +260,7 @@ class ProfileController extends Controller
 			'page_title' => $this->page_title,
 			'page_header' => 'Search Result',
 			'main_menu' => 'dispatch',
-		], with(compact('results')));
+		], compact('results'));
 	}
 	public function others_profile($others_id = null)
 	{
@@ -276,6 +276,6 @@ class ProfileController extends Controller
 			'page_title' => $this->page_title,
 			'page_header' => 'Profile',
 			'main_menu' => 'dispatch',
-		], with(compact('result', 'documents', 'user_profileInfo', 'users_bankinfo')));
+		], compact('result', 'documents', 'user_profileInfo', 'users_bankinfo'));
 	}
 }

@@ -44,7 +44,7 @@ class CompanyController extends Controller
     return view('backend.company.index', [
       'page_title' => $this->page_title,
       'page_header' => 'Company Info',
-    ], with(compact('result')));
+    ], compact('result'));
   }
 
 
@@ -319,7 +319,7 @@ class CompanyController extends Controller
       return view('backend.company.edit', [
         'page_title' => $this->page_title,
         'page_header' => 'Update Company Information',
-      ], with(compact('result')));
+      ], compact('result'));
     } else if ($request->submit) {
 
 
@@ -622,7 +622,7 @@ class CompanyController extends Controller
       return view('backend.company.vat_edit', [
         'page_title' => $this->page_title,
         'page_header' => 'Update Vat Information',
-      ], with(compact('result')));
+      ], compact('result'));
     } else if ($request->submit) {
 
       $validatedData = $request->validate([
@@ -674,6 +674,6 @@ class CompanyController extends Controller
       'page_title' => $this->page_title,
       'page_header' => 'Vat Information',
 
-    ], with(compact('result')));
+    ], compact('result'));
   }
 }

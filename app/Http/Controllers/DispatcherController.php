@@ -28,7 +28,7 @@ class DispatcherController extends Controller
 
 				'main_menu' => 'dispatch',
 
-			], with(compact('result')));
+			], compact('result'));
 		} else {
 			$notification = array(
 				'status' => 'You are not allowed to access',
@@ -68,7 +68,7 @@ class DispatcherController extends Controller
 			'page_header' => 'My Profile',
 			'main_menu' => 'profile',
 
-		], with(compact('result', 'documents', 'user_profileInfo', 'users_bankinfo', 'basicInfo', 'personalInfo')));
+		], compact('result', 'documents', 'user_profileInfo', 'users_bankinfo', 'basicInfo', 'personalInfo'));
 	}
 	public function dispatch_form()
 	{
@@ -119,7 +119,7 @@ class DispatcherController extends Controller
 				'page_header' => 'Booking Add',
 				'main_menu' => 'dispatch',
 
-			], with(compact('vehicle_type', 'rider_info', 'language_info')));
+			], compact('vehicle_type', 'rider_info', 'language_info'));
 		} else if (request()->has('submit')) {
 
 			$validatedData = request()->validate([
@@ -176,7 +176,7 @@ class DispatcherController extends Controller
 					'page_title' => $this->page_title,
 					'page_header' => 'Update Country Information',
 					'main_menu' => 'dispatch',
-				], with(compact('result')));
+				], compact('result'));
 			}
 		} else if (request()->has('submit')) {
 

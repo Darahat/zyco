@@ -48,7 +48,7 @@ class PostalCodeController extends Controller
       'main_menu' => 'admin',
       'page_header' => 'Postal Information',
 
-    ], with(compact('result')));
+    ], compact('result'));
   }
 
   public function add(Request $request)
@@ -186,7 +186,7 @@ class PostalCodeController extends Controller
         'page_title' => $this->page_title,
         'main_menu' => 'admin',
         'page_header' => 'Update Postal Information',
-      ], with(compact('result')));
+      ], compact('result'));
     } else if ($request->submit) {
 
       $validatedData = $request->validate([

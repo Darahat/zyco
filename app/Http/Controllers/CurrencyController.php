@@ -29,7 +29,7 @@ class CurrencyController extends Controller
 				'main_menu' => 'admin',
 				'page_header' => 'currency',
 
-			], with(compact('result')));
+			], compact('result'));
 		} else {
 			$notification = array(
 				'status' => 'You are not allowed to access',
@@ -112,7 +112,7 @@ class CurrencyController extends Controller
 					'page_title' => $this->page_title,
 					'main_menu' => 'admin',
 					'page_header' => 'Update Currency Information',
-				], with(compact('result')));
+				], compact('result'));
 			}
 		} else if ($request->submit) {
 

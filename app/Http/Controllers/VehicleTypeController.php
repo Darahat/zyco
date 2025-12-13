@@ -36,7 +36,7 @@ class VehicleTypeController extends Controller
 				'main_menu' => 'admin',
 				'page_header' => 'Manage Vechile Type',
 
-			], with(compact('vehicles')));
+			], compact('vehicles'));
 		} else {
 			$notification = array(
 				'status' => 'You are not allowed to access',
@@ -56,7 +56,7 @@ class VehicleTypeController extends Controller
 				'main_menu' => 'admin',
 				'page_header' => 'Manage Vehicle Type',
 
-			], with(compact('classification')));
+			], compact('classification'));
 		} else {
 			$notification = array(
 				'status' => 'You are not allowed to access',
@@ -129,7 +129,7 @@ class VehicleTypeController extends Controller
 				'page_title' => $this->page_title,
 				'main_menu' => 'admin',
 				'page_header' => 'Manage Vehicle Type',
-			], with(compact('row')));
+			], compact('row'));
 		}
 
 		$notification = array(

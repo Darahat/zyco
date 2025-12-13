@@ -35,7 +35,7 @@ class VehicleMakeController extends Controller
                 'main_menu' => 'admin',
                 'page_header' => 'Vechile Make',
 
-            ], with(compact('vehicles')));
+            ], compact('vehicles'));
         } else {
             $notification = array(
                 'status' => 'You are not allowed to access',
@@ -114,7 +114,7 @@ class VehicleMakeController extends Controller
                 'page_title' => $this->page_title,
                 'main_menu' => 'admin',
                 'page_header' => 'Vechile Make',
-            ], with(compact('row')));
+            ], compact('row'));
         }
 
         $notification = array(

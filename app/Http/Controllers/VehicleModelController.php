@@ -35,7 +35,7 @@ class VehicleModelController extends Controller
                 'main_menu' => 'admin',
                 'page_header' => 'Vechile Model',
 
-            ], with(compact('vehicles')));
+            ], compact('vehicles'));
         } else {
             $notification = array(
                 'status' => 'You are not allowed to access',
@@ -55,7 +55,7 @@ class VehicleModelController extends Controller
                 'main_menu' => 'admin',
                 'page_header' => 'Vehicle Model',
 
-            ], with(compact('vehicles_make')));
+            ], compact('vehicles_make'));
         } else {
             $notification = array(
                 'status' => 'You are not allowed to access',
@@ -116,7 +116,7 @@ class VehicleModelController extends Controller
                 'page_title' => $this->page_title,
                 'main_menu' => 'admin',
                 'page_header' => 'Vechile Model',
-            ], with(compact('row', 'vehicles_make')));
+            ], compact('row', 'vehicles_make'));
         }
 
         $notification = array(

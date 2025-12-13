@@ -30,7 +30,7 @@ class LoginConfigController extends Controller
             'page_title' => $this->page_title,
             'main_menu' => 'admin_settings',
             'page_header' => 'login config',
-        ], with(compact('result')));
+        ], compact('result'));
     }
     /**
      * Add a New language

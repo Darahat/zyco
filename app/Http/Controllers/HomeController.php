@@ -44,7 +44,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Notice',
             'page_header' => 'Notice',
 
-        ], with(compact('marquee_notice', 'notice')));
+        ], compact('marquee_notice', 'notice'));
     }
     public function notice(Request $request)
     {
@@ -68,7 +68,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Notice',
             'page_header' => $header,
 
-        ], with(compact('marquee_notice', 'notice')));
+        ], compact('marquee_notice', 'notice'));
     }
     public function notice_details(Request $request)
     {
@@ -85,7 +85,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Notice',
             'page_header' => $id
 
-        ], with(compact('marquee_notice', 'notice')));
+        ], compact('marquee_notice', 'notice'));
     }
     public function pages(Request $request)
     {
@@ -105,7 +105,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | ' . $page->menu_name,
             'page_header' => $page->menu_name
 
-        ], with(compact('marquee_notice', 'page', 'slider_images', 'facility_sub_menu_list')));
+        ], compact('marquee_notice', 'page', 'slider_images', 'facility_sub_menu_list'));
     }
 
     public function teacher()
@@ -120,7 +120,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Officers',
             'page_header' => 'আমাদের শিক্ষকমন্ডলী'
 
-        ], with(compact('marquee_notice', 'teachers_list')));
+        ], compact('marquee_notice', 'teachers_list'));
     }
     public function officer()
     {
@@ -134,7 +134,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Officers',
             'page_header' => 'আমাদের কর্মকর্তা/কর্মচারীবৃন্দ'
 
-        ], with(compact('marquee_notice', 'officers_list')));
+        ], compact('marquee_notice', 'officers_list'));
     }
     public function history()
     {
@@ -146,7 +146,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | History',
             'page_header' => 'History'
 
-        ], with(compact('marquee_notice')));
+        ], compact('marquee_notice'));
     }
     public function academic_calender()
     {
@@ -157,7 +157,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Academic Calender',
             'page_header' => 'Academic Calender'
 
-        ], with(compact('marquee_notice')));
+        ], compact('marquee_notice'));
     }
     public function forms()
     {
@@ -168,7 +168,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Academic Calender',
             'page_header' => 'Forms'
 
-        ], with(compact('marquee_notice', 'form_categoy')));
+        ], compact('marquee_notice', 'form_categoy'));
     }
     public function gallery()
     {
@@ -184,7 +184,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Academic Calender',
             'page_header' => 'ফটো গ্যালারী'
 
-        ], with(compact('marquee_notice', 'gallery_categoy')));
+        ], compact('marquee_notice', 'gallery_categoy'));
     }
     public function gallery_details(Request $request)
     {
@@ -200,7 +200,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Academic Calender',
             'page_header' => 'ফটো গ্যালারী'
 
-        ], with(compact('marquee_notice', 'gallery', 'category_title')));
+        ], compact('marquee_notice', 'gallery', 'category_title'));
     }
     public function downloadfile()
     {
@@ -256,7 +256,7 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Academic Calender',
             'page_header' => 'ডিজিটাল কন্টেন্ট'
 
-        ], with(compact('marquee_notice', 'content_categoy')));
+        ], compact('marquee_notice', 'content_categoy'));
     }
     public function content_details(Request $request)
     {
@@ -272,6 +272,6 @@ class HomeController extends Controller
             'page_title' => 'ARMC, Mymensingh | Academic Calender',
             'page_header' => 'ডিজিটাল কন্টেন্ট'
 
-        ], with(compact('marquee_notice', 'content', 'category_title')));
+        ], compact('marquee_notice', 'content', 'category_title'));
     }
 }

@@ -30,7 +30,7 @@ class AccountClassificationController extends Controller
         'main_menu' => 'admin',
         'page_header' => 'Account Classification Package',
 
-      ], with(compact('result')));
+      ], compact('result'));
     } else {
       $notification = array(
         'status' => 'You are not allowed to access',
@@ -110,7 +110,7 @@ class AccountClassificationController extends Controller
         return view('backend.account_classification_package.edit', [
           'page_title' => $this->page_title,
           'page_header' => 'Update account_classification_package Information',
-        ], with(compact('result')));
+        ], compact('result'));
       }
     } else if ($request->submit) {
 

@@ -30,7 +30,7 @@ class AccountUpgradationController extends Controller
 				'page_header' => 'Account upgradation application',
 				'main_menu' => 'admin',
 
-			], with(compact('result', 'package_name')));
+			], compact('result', 'package_name'));
 		} else {
 			$notification = array(
 				'status' => 'You are not allowed to access',
@@ -55,7 +55,7 @@ class AccountUpgradationController extends Controller
 				'page_header' => 'Add New Account Upgradation Application',
 				'main_menu' => 'dispatch',
 
-			], with(compact('users_personalinfo')));
+			], compact('users_personalinfo'));
 		} else if ($request->submit) {
 			//  dd($request->all());
 			//  exit;
@@ -111,7 +111,7 @@ class AccountUpgradationController extends Controller
 					'page_title' => $this->page_title,
 					'page_header' => 'Update Account Upgradation Application Information',
 					'main_menu' => 'dispatch',
-				], with(compact('result')));
+				], compact('result'));
 			}
 		} else if ($request->submit) {
 
@@ -199,6 +199,6 @@ class AccountUpgradationController extends Controller
 			'page_header' => 'Profile Upgradation Packages',
 			'main_menu' => 'dispatch',
 
-		], with(compact('personalInfo', 'account_classification_package')));
+		], compact('personalInfo', 'account_classification_package'));
 	}
 }
