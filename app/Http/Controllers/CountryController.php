@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\File;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Session;
 
 class CountryController extends Controller

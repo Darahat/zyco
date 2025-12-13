@@ -121,7 +121,7 @@
             <!-- Status Dropdown Menu -->
             <li class="nav-item dropdown">
                 <a class="nav-link " data-toggle="dropdown" href="#">
-                    <img src="https://app.zyco.nl/public/icons/layoutIcons/chat.png')}}" alt="" class="topnavothericon" />
+                    <img src="{{ asset('icons/layoutIcons/chat.png') }}" alt="" class="topnavothericon" />
 
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -149,8 +149,8 @@
 
             <li class="nav-item dropdown">
                 <a class="nav-link " data-toggle="dropdown" href="#">
-                    <!--	src="https://app.zyco.nl/public/icons/layoutIcons/active.png')}}"-->
-                    <img src="https://app.zyco.nl/public/icons/layoutIcons/Notification.png')}}" alt=""
+                    <!--	src="{{ asset('icons/layoutIcons/active.png') }}"-->
+                    <img src="{{ asset('icons/layoutIcons/Notification.png') }}" alt=""
                         class="topnavothericon" />
                     <div class="notification_number">0</div>
 
@@ -189,7 +189,7 @@
 
                     src="{{ asset('users_personalinfo/'.$user_profileInfo->profile_picture) }}"
                     @endif>
-                    <img src="https://app.zyco.nl/public/icons/layoutIcons/caret-down.png')}}"
+                    <img src="{{ asset('icons/layoutIcons/caret-down.png') }}"
                         class="topavatarmiddleicon" />
 
                 </a>

@@ -16,7 +16,8 @@
 <div class="row">
     <div class="col-md-4">
         <div class="hold-transition login-page loginSideDiv" style="background-color: #F4F9FF">
-            <img src="{{asset('images/loginimage.png')}}" alt="login_image" class="loginSideImage">
+                         <img src="{{asset('images/Group 455.png')}}" alt="login_image" class="loginSideImage">
+
         </div>
     </div>
     <div class="col-md-8 col-sm-12">
@@ -54,7 +55,7 @@
                         </div>
                         <div class="bs-stepper-content">
                             <div class="card p-3">
-                                <div id="test-l-1" class="content">
+                                <div id="test-l-1" class="content active">
                                     <div>
                                         <img src="{{asset('icons/zyco.png')}}" style="height:75px">
                                         <h4 class="font-weight-bolder">Create a dispatcher account</h4>
@@ -525,7 +526,7 @@ function waitToGoDashboard() {
 }
 
 function sendToDashboardNow() {
-    window.location.href = 'https://app.zyco.nl/user-dashboard';
+    window.location.href = 'http://127.0.0.1:8000/user-dashboard';
 }
 </script>
 <script>

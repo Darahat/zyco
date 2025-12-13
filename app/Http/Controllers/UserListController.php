@@ -18,7 +18,7 @@ use App\Models\User;
 
 use Illuminate\Http\File;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 use Session;
 
@@ -27,21 +27,13 @@ use Session;
 
 
 class UserListController extends Controller
-
-
-
 {
 
-
+    public $page_title;
 
     public function __construct(){
 
-
-
         $this->page_title = 'Admin Panel';
-
-
-
     }
 
 

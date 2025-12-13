@@ -42,7 +42,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/user (1).svg" />
+                    <img class="nav-icon" src="http://127.0.0.1:8000/public/icons/layoutIcons/user (1).svg" />
                     <p>Admin</p>
                 </div>
                 <div class="col-2 text-center">
@@ -59,7 +59,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/user (1).svg" />
+                    <img class="nav-icon" src="http://127.0.0.1:8000/public/icons/layoutIcons/user (1).svg" />
                     <p>Support</p>
                 </div>
                 <div class="col-2 text-center">

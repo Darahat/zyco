@@ -410,7 +410,7 @@ function waitToGoDashboard() {
 }
 
 function sendToDashboardNow() {
-    window.location.href = 'https://app.zyco.nl/user-dashboard';
+    window.location.href = 'http://127.0.0.1:8000/user-dashboard';
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {

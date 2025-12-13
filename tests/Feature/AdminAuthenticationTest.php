@@ -38,7 +38,7 @@ class AdminAuthenticationTest extends TestCase
         $response = $this->post('/authenticate', [
             'email' => 'admin@zyco.nl',
             'password' => 'password',
-        ]);
+        ]);   
 
         // Controller returns mobile number on success
         $response->assertStatus(200);

@@ -54,7 +54,7 @@
                             </div>
                             <div class="bs-stepper-content">
                                 <div class="  p-4">
-                                    <div id="test-l-1" class="content">
+                                    <div id="test-l-1" class="content active">
                                         <div class="text-center">
                                             <img src="{{asset('icons/zyco.png')}}" style="height:75px">
                                             <p class="welcome_msg  ">Welcome to Zyco!</p>
@@ -482,7 +482,7 @@ function waitToGoDashboard() {
 }
 
 function sendToDashboardNow() {
-    window.location.href = 'https://app.zyco.nl/user-dashboard';
+    window.location.href = 'http://127.0.0.1:8000/user-dashboard';
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {

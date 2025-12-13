@@ -1,4 +1,9 @@
 @extends('app')
+
+{{-- Load only required plugins for admin login --}}
+<x-plugins.stepper />
+<x-plugins.toastr />
+
 @section('content')
 <div class="row bg-white">
     <div class="col-md-7">
@@ -44,7 +49,7 @@
                             </div>
                             <div class="bs-stepper-content">
                                 <div class=" p-4">
-                                    <div id="test-l-1" class="content">
+                                    <div id="test-l-1" class="content active">
                                         <div class="text-center">
                                             <img src="{{asset('icons/zyco.png')}}" style="height:75px">
                                             <p class="welcome_msg  ">Welcome to Zyco!</p>
@@ -443,7 +448,7 @@ function phoneSendAuth(number) {
 }
 
 function sendToDashboardNow() {
-    window.location.href = 'https://app.zyco.nl/adminManage/dashboard';
+    window.location.href = 'http://127.0.0.1:8000/adminManage/dashboard';
 }
 document.addEventListener("DOMContentLoaded", function(event) {
     function OTPInput() {

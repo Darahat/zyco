@@ -5,9 +5,9 @@
 namespace App\Http\Controllers;
 
 
-
 use Illuminate\Http\Request;
 
+ 
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Pagination\Paginator;
@@ -20,7 +20,7 @@ use App\Models\User;
 
 use Illuminate\Http\File;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 use Session;
 
@@ -29,6 +29,7 @@ use Session;
 class VehicleController extends Controller
 
 {
+	public $page_title;
 
 	public function __construct()
 	{

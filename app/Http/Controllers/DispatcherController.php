@@ -18,7 +18,7 @@ class DispatcherController extends Controller
 	}
 	public function index()
 	{
-		if (Auth::guard('driver')->check()) {
+		if (Auth::guard('web')->check()) {
 
 			Paginator::useBootstrap();
 			$result = DB::table('country')->orderBy('id', 'DESC')->get();

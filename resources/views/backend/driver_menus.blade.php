@@ -60,7 +60,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/4-rounded-squares.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/4-rounded-squares.svg') }}\" /
                     <p>General</p>
                 </div>
                 <div class="col-2 text-center">
@@ -77,7 +77,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/user (1).svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/user (1).svg') }}\" /
                     <p>Profile</p>
                 </div>
                 <div class="col-2 text-center">
@@ -94,7 +94,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/delivery.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/delivery.svg') }}\" /
                     <p>Dispatch</p>
                 </div>
                 <div class="col-2 text-center">
@@ -112,7 +112,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/chat-bubbles-with-ellipsis.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/chat-bubbles-with-ellipsis.svg') }}\" /
                     <p>Contact</p>
                 </div>
                 <div class="col-2 text-center">
@@ -131,7 +131,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/chat-bubbles-with-ellipsis.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/chat-bubbles-with-ellipsis.svg') }}\" /
                     <p>Groups</p>
                 </div>
                 <div class="col-2 text-center">
@@ -149,7 +149,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/management.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/management.svg') }}\" /
                     <p>CRM</p>
                 </div>
                 <div class="col-2 text-center">
@@ -169,7 +169,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/car.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/car.svg') }}\" /
                     <p>Vehicle</p>
                 </div>
                 <div class="col-2 text-center">
@@ -187,7 +187,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/admin.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/admin.svg') }}\" /
                     <p>Administration</p>
                 </div>
                 <div class="col-2 text-center">
@@ -205,7 +205,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/level-up.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/level-up.svg') }}\" /
                     <p>Upgrade</p>
                 </div>
                 <div class="col-2 text-center">
@@ -225,7 +225,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/settings.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/settings.svg') }}\" /
                     <p>Settings</p>
                 </div>
                 <div class="col-2 text-center">
@@ -245,8 +245,8 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <svg data-src="https://app.zyco.nl/public/icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
-                    <!--	<img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/user.svg"/>-->
+                    <svg data-src="{{ asset('icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
+                    <!--	<img class="nav-icon" src="{{ asset('icons/layoutIcons/user.svg') }}\" /-->
                     <p>Chat
                     </p>
                 </div>
@@ -266,7 +266,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/people.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/people.svg') }}\" /
                     <p>My Groups
                     </p>
                 </div>
@@ -284,7 +284,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/team.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/team.svg') }}\" /
                     <p>Other Groups
                     </p>
                 </div>
@@ -305,7 +305,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/user (1).svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/user (1).svg') }}\" /
                     <p>My Profile
                     </p>
                 </div>
@@ -326,7 +326,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/user (1).svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/user (1).svg') }}\" /
                     <p>Profile
                     </p>
                 </div>
@@ -345,7 +345,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/car.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/car.svg') }}\" /
                     <p>Vehicle
                     </p>
                 </div>
@@ -365,7 +365,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/delivery.svg" />
+                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/delivery.svg') }}\" /
                     <p>Dispatch
                     </p>
                 </div>
@@ -383,10 +383,10 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <svg data-src="https://app.zyco.nl/public/icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
+                    <svg data-src="{{ asset('icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
 
 
-                    <!--	<img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/user.svg"/>-->
+                    <!--	<img class="nav-icon" src="{{ asset('icons/layoutIcons/user.svg') }}\" /-->
                     <p>Drivers List
                     </p>
                 </div>
@@ -406,7 +406,7 @@ endif;
                             <div class="left"> </div>
                         </div>
                         <div class="col center-content">
-                            <img class="nav-icon" src="https://app.zyco.nl/public/icons/layoutIcons/check.svg" />
+                            <img class="nav-icon" src="{{ asset('icons/layoutIcons/check.svg') }}\" /
                             <p>Auto Assign
                             </p>
                         </div>

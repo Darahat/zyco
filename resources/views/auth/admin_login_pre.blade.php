@@ -389,7 +389,7 @@ function phoneSendAuth(number) {
 }
 
 function sendToDashboardNow() {
-    window.location.href = 'https://app.zyco.nl/adminManage/dashboard';
+    window.location.href = 'http://127.0.0.1:8000/adminManage/dashboard';
 }
 document.addEventListener("DOMContentLoaded", function(event) {
     function OTPInput() {

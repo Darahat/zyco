@@ -16,7 +16,7 @@ use App\Models\User;
 
 use Illuminate\Http\File;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 use Session;
 

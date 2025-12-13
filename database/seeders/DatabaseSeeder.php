@@ -15,7 +15,12 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             CountrySeeder::class,
             VehicleClassificationSeeder::class,
+            UserSeeder::class,
             SiteConfigSeeder::class,
+            GroupSeeder::class,
+            ERPSeeder::class,
+            SystemTablesSeeder::class,
+            CMSSeeder::class,
         ]);
     }
 }

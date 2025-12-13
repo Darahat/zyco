@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\File;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Carbon\Carbon;
 
 class VehicleClassificationController extends Controller
 {
+  public $page_title;
+
   public function __construct()
   {
     $this->page_title = 'Admin Panel';

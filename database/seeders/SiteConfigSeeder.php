@@ -16,6 +16,10 @@ class SiteConfigSeeder extends Seeder
             'brand_name' => 'Zyco',
             'address' => 'Amsterdam, Netherlands',
             'invoice_email' => 'info@zyco.nl',
+            'support_email' => 'support@zyco.nl',
+            'registration_number' => 'REG123456',
+            'telephone' => '+31 20 1234567',
+            'vat_number' => 'NL123456789B01',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

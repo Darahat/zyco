@@ -102,7 +102,7 @@
     @font-face {
         font-family: 'lato';
         font-style: normal;
-        src: url('../public/assets/fonts/lato/Lato-Regular.ttf');
+        src: url('{{ asset('assets/fonts/lato/Lato-Regular.ttf') }}');
     }
 
     html,

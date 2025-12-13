@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\File;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Session;
 
 class LoginConfigController extends Controller
 {
+    public $page_title;
+
     public function __construct()
     {
         $this->page_title = 'Admin Panel';
@@ -46,13 +48,13 @@ class LoginConfigController extends Controller
             ]);
         } else if ($request->submit) {
             $validatedData = $request->validate([
-                'name' => 'required|unique:language',
-                'value' => 'required|unique:language',
+                'name' => 'required|unique:language,language_name',
+                'value' => 'required|unique:language,language_code',
                 'status' => 'required',
             ]);
             $post = array();
-            $post['name'] = $request->name;
-            $post['value'] = $request->value;
+            $post['language_name'] = $request->name;
+            $post['language_code'] = $request->value;
             $post['status'] = $request->status;
             $insertData = DB::table('language')->insert($post);
             if ($insertData) {

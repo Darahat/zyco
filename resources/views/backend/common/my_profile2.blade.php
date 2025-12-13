@@ -1,3 +1,6 @@
+@extends('backend.web_admin')
+
+@section('content')
  <div class="row p-2 profile-upper-portion mb-2">
      <div class="col-2 h-100 d-flex  align-items-center justify-content-center">
          @if(empty($personalInfo->profile_picture))
@@ -64,3 +67,4 @@
      </div>
 
  </div>
+@endsection

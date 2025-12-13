@@ -14,7 +14,7 @@ use App\Models\Country;
 use App\Models\User;
 use App\Models\CustomDatatableColumn;
 use Illuminate\Http\File;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use Session;
 use App\Models\Role;
