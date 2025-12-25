@@ -4,186 +4,149 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Admin;
-use App\Models\User;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
-use Session;
+use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
 
 class VehicleClassificationController extends Controller
 {
-  public $page_title;
+    protected string $page_title = 'Admin Panel';
 
-  public function __construct()
-  {
-    $this->page_title = 'Admin Panel';
-  }
-  public function index()
-  {
-    if (Auth::guard('admin')->check()) {
-
-      Paginator::useBootstrap();
-      $result = DB::table('vehicle_classification')->orderBy('id', 'DESC')->get();
-      return view('backend.vehicle_classification.index', [
-        'page_title' => $this->page_title,
-        'main_menu' => 'admin',
-        'page_header' => 'Vehicle Classification',
-
-      ], compact('result'));
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect("adminLoginForm")->with($notification);
+    public function __construct()
+    {
+        Paginator::useBootstrap();
     }
-  }
 
+    // List all vehicle classifications
+    public function index()
+    {
+        $this->authorizeAdmin();
 
-  /**
-   * Add a New vehicle_classification
-   *
-   * @param array $request  Input values
-   * @return redirect     to vehicle_classification view
-   */
-  public function add(Request $request)
-  {
-    if (!$_POST) {
+        $result = DB::table('vehicle_classification')
+            ->orderByDesc('id')
+            ->get();
 
-      return view('backend.vehicle_classification.add', [
-        'page_title' => $this->page_title,
-        'main_menu' => 'admin',
-        'page_header' => 'Add New vehicle_classification',
-
-      ]);
-    } else if ($request->submit) {
-
-      $validatedData = $request->validate([
-        'classification_name' => 'required|unique:vehicle_classification',
-        'status' => 'required',
-        'classification_badge_icon' => 'required|image|mimes:png,jpeg,jpg|max:500',
-
-      ]);
-      $badgeIcon = 'badgeIcon' . time() . '.' . $request->classification_badge_icon->extension();
-      $post = array();
-      $post['classification_name'] = $request->classification_name;
-      $post['status'] = $request->status;
-      $post['badge_icon'] = $badgeIcon;
-      // $post['created_at'] = Carbon::now();
-
-      $insertData = DB::table('vehicle_classification')->insert($post);
-      $request->classification_badge_icon->move(public_path('vehicle_classification'), $badgeIcon);
-      if ($insertData) {
-        $notification = array(
-          'status' => 'vehicle_classification Information Saved Successfully',
-          'alert-type' => 'success'
-        );
-        return redirect()->back()->with($notification);
-      } else {
-        $notification = array(
-          'status' => 'vehicle_classification Information Save failed',
-          'alert-type' => 'error'
-        );
-        return redirect()->back()->with($notification);
-      }
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
+        return view('backend.vehicle_classification.index', compact('result'))
+            ->with([
+                'page_title' => $this->page_title,
+                'main_menu'  => 'admin',
+                'page_header'=> 'Vehicle Classification',
+            ]);
     }
-  }
 
-  /**
-   * Update vehicle_classification Details
-   *
-   * @param array $request    Input values
-   * @return redirect     to vehicle_classification View
-   */
-  public function update(Request $request)
-  {
-    if (!$_POST) {
+    // Show form to add new classification
+    public function create()
+    {
+        $this->authorizeAdmin();
 
-      if (Auth::guard('admin')->check()) {
-
-        $result = DB::table('vehicle_classification')->where('id', $request->id)->first();
-
-        return view('backend.vehicle_classification.edit', [
-          'page_title' => $this->page_title,
-          'main_menu' => 'admin',
-          'page_header' => 'Update vehicle classification Information',
-        ], compact('result'));
-      }
-    } else if ($request->submit) {
-
-      $validatedData = $request->validate([
-        'classification_name' => 'required',
-        'status' => 'required',
-      ]);
-
-      //return response()->json( $validatedData );
-
-      $id = $request->id;
-      $post = array();
-      $post['classification_name'] = $request->classification_name;
-      $post['status'] = $request->status;
-      $UpdateData = DB::table('vehicle_classification')->where('id', $id)->update($post);
-
-      $notification = array(
-        'status' => 'Data Updated Successfully',
-        'alert-type' => 'success'
-      );
-      return redirect()->back()->with($notification);
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
+        return view('backend.vehicle_classification.add')
+            ->with([
+                'page_title' => $this->page_title,
+                'main_menu'  => 'admin',
+                'page_header'=> 'Add New Vehicle Classification',
+            ]);
     }
-  }
 
-  /**
-   * Delete vehicle_classification
-   *
-   * @param array $request    Input values
-   * @return redirect     to vehicle_classification View
-   */
-  public function delete(Request $request)
-  {
+    // Store new classification
+    public function store(Request $request)
+    {
+        $this->authorizeAdmin();
 
+        $validated = $request->validate([
+            'classification_name'       => 'required|unique:vehicle_classification,classification_name',
+            'status'                    => 'required',
+            'classification_badge_icon' => 'required|image|mimes:png,jpeg,jpg|max:500',
+        ]);
 
-    if (Auth::guard('admin')->check()) {
+        // Handle badge icon upload
+        $badgeIconName = 'badge_icon_' . time() . '.' . $request->classification_badge_icon->extension();
+        $request->classification_badge_icon->move(public_path('vehicle_classification'), $badgeIconName);
 
-      $vehicle_classificationData = DB::table('vehicle_classification')->where('id', $request->id)->first();
-      $vehicle_classification_code = $vehicle_classificationData->id;
+        $insertData = DB::table('vehicle_classification')->insert([
+            'classification_name' => $validated['classification_name'],
+            'status'              => $validated['status'],
+            'badge_icon'          => $badgeIconName,
+            'created_at'          => Carbon::now(),
+        ]);
 
-      $checkVehicleExist = DB::table('users_vehicle')->where('vehicle_classification_id', $vehicle_classification_code)->first();
-
-      if (!empty($checkVehicleExist)) {
-        $notification = array(
-          'status' => 'Some vehicle have this classification. So, We cannot delete the classification.',
-          'alert-type' => 'error'
-        );
-      } else {
-        $delete = DB::table('vehicle_classification')->where('id', $request->id)->delete();
-        $notification = array(
-          'status' => 'Vehicle Classification Information Deleted Successfully',
-          'alert-type' => 'success'
-        );
-      }
-
-      return redirect()->back()->with($notification);
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
+        return redirect()->back()->with([
+            'status'     => $insertData ? 'Vehicle Classification Saved Successfully' : 'Failed to save Vehicle Classification',
+            'alert-type' => $insertData ? 'success' : 'error',
+        ]);
     }
-  }
+
+    // Show form to edit classification
+    public function edit($id)
+    {
+        $this->authorizeAdmin();
+
+        $result = DB::table('vehicle_classification')->find($id);
+
+        return view('backend.vehicle_classification.edit', compact('result'))
+            ->with([
+                'page_title' => $this->page_title,
+                'main_menu'  => 'admin',
+                'page_header'=> 'Update Vehicle Classification',
+            ]);
+    }
+
+    // Update classification
+    public function update(Request $request, $id)
+    {
+        $this->authorizeAdmin();
+
+        $validated = $request->validate([
+            'classification_name' => 'required|unique:vehicle_classification,classification_name,' . $id,
+            'status'              => 'required',
+        ]);
+
+        DB::table('vehicle_classification')
+            ->where('id', $id)
+            ->update([
+                'classification_name' => $validated['classification_name'],
+                'status'              => $validated['status'],
+                'updated_at'          => Carbon::now(),
+            ]);
+
+        return redirect()->back()->with([
+            'status'     => 'Vehicle Classification Updated Successfully',
+            'alert-type' => 'success',
+        ]);
+    }
+
+    // Delete classification
+    public function destroy($id)
+    {
+        $this->authorizeAdmin();
+
+        $vehicleExists = DB::table('users_vehicle')
+            ->where('vehicle_classification_id', $id)
+            ->exists();
+
+        if ($vehicleExists) {
+            return redirect()->back()->with([
+                'status'     => 'Some vehicles have this classification. Cannot delete.',
+                'alert-type' => 'error',
+            ]);
+        }
+
+        DB::table('vehicle_classification')->where('id', $id)->delete();
+
+        return redirect()->back()->with([
+            'status'     => 'Vehicle Classification Deleted Successfully',
+            'alert-type' => 'success',
+        ]);
+    }
+
+    // Helper function to check admin
+    private function authorizeAdmin()
+    {
+        if (!Auth::guard('admin')->check()) {
+            redirect('adminLoginForm')->with([
+                'status' => 'You are not allowed to access',
+                'alert-type' => 'error',
+            ])->send();
+            exit;
+        }
+    }
 }

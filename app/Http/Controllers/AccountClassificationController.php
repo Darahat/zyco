@@ -4,182 +4,155 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Admin;
-use App\Models\User;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
-use Session;
+use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
 
 class AccountClassificationController extends Controller
 {
-  public function __construct()
-  {
-    $this->page_title = 'Admin Panel';
-  }
-  public function index()
-  {
-    if (Auth::guard('admin')->check()) {
+    protected string $page_title = 'Admin Panel';
 
-      Paginator::useBootstrap();
-      $result = DB::table('account_classification_package')->orderBy('id', 'DESC')->get();
-      return view('backend.account_classification_package.index', [
-        'page_title' => $this->page_title,
-        'main_menu' => 'admin',
-        'page_header' => 'Account Classification Package',
+    public function __construct()
+    {
+        Paginator::useBootstrap();
 
-      ], compact('result'));
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect("adminLoginForm")->with($notification);
+        $this->middleware(function ($request, $next) {
+            if (!Auth::guard('admin')->check()) {
+                return redirect()
+                    ->route('adminLoginForm')
+                    ->with([
+                        'status' => 'You are not allowed to access',
+                        'alert-type' => 'error'
+                    ]);
+            }
+            return $next($request);
+        });
     }
-  }
 
-  /**
-   * Add a New account_classification_package
-   *
-   * @param array $request  Input values
-   * @return redirect     to account_classification_package view
-   */
-  public function add(Request $request)
-  {
+    /**
+     * List all packages
+     */
+    public function index()
+    {
+        $result = DB::table('account_classification_package')
+            ->orderByDesc('id')
+            ->get();
 
-    if (!$_POST) {
-      return view('backend.account_classification_package.add', [
-        'page_title' => $this->page_title,
-        'main_menu' => 'admin',
-        'page_header' => 'Add New Account Classification Package',
-
-      ]);
-    } else if ($request->submit) {
-      //  dd($request->all());
-      //  exit;
-      $validatedData = $request->validate([
-        'classification_name' => 'required|unique:account_classification_package',
-        'price'  => 'required|numeric',
-      ]);
-
-      $post = array();
-      $post['classification_name'] = $request->classification_name;
-      $post['price'] = $request->price;
-      $post['features'] = $request->features;
-      $post['created_at'] = Carbon::now();
-      $insertData = DB::table('account_classification_package')->insert($post);
-
-      if ($insertData) {
-        $notification = array(
-          'status' => 'account_classification_package Information Saved Successfully',
-          'alert-type' => 'success'
-        );
-        return redirect('admin/account_classification_package')->with($notification);
-      } else {
-        $notification = array(
-          'status' => 'account_classification_package Information Save failed',
-          'alert-type' => 'error'
-        );
-        return redirect('admin/account_classification_package')->with($notification);
-      }
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
+        return view('backend.account_classification_package.index', [
+            'page_title'  => $this->page_title,
+            'main_menu'   => 'admin',
+            'page_header' => 'Account Classification Package',
+            'result'      => $result,
+        ]);
     }
-  }
 
-  /**
-   * Update account_classification_package Details
-   *
-   * @param array $request    Input values
-   * @return redirect     to account_classification_package View
-   */
-  public function update(Request $request)
-  {
-    if (!$_POST) {
+    /**
+     * Create package (GET + POST)
+     */
+    public function add(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            return view('backend.account_classification_package.add', [
+                'page_title'  => $this->page_title,
+                'main_menu'   => 'admin',
+                'page_header' => 'Add New Account Classification Package',
+            ]);
+        }
 
-      if (Auth::guard('admin')->check()) {
+        $validated = $request->validate([
+            'classification_name' => 'required|unique:account_classification_package,classification_name',
+            'price'               => 'required|numeric|min:0',
+            'features'            => 'nullable|string',
+        ]);
 
-        $result = DB::table('account_classification_package')->where('id', $request->id)->first();
+        DB::table('account_classification_package')->insert([
+            'classification_name' => $validated['classification_name'],
+            'price'               => $validated['price'],
+            'features'            => $validated['features'] ?? null,
+            'created_at'          => Carbon::now(),
+        ]);
 
-        return view('backend.account_classification_package.edit', [
-          'page_title' => $this->page_title,
-          'page_header' => 'Update account_classification_package Information',
-        ], compact('result'));
-      }
-    } else if ($request->submit) {
-
-      $validatedData = $request->validate([
-        'classification_name' => 'required',
-        'price'  => 'required|numeric',
-      ]);
-
-      //return response()->json( $validatedData );
-
-      $id = $request->id;
-      $post = array();
-      $post['classification_name'] = $request->classification_name;
-      $post['price'] = $request->price;
-      $post['features'] = $request->features;
-      $post['updated_at'] = Carbon::now();
-      $UpdateData = DB::table('account_classification_package')->where('id', $id)->update($post);
-
-      $notification = array(
-        'status' => 'Data Updated Successfully',
-        'alert-type' => 'success'
-      );
-      return redirect()->back()->with($notification);
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->route('adminLoginForm')->with($notification);
+        return redirect()
+            ->route('admin.account_classification_package.index')
+            ->with([
+                'status' => 'Account classification package created successfully',
+                'alert-type' => 'success'
+            ]);
     }
-  }
 
-  /**
-   * Delete account_classification_package
-   *
-   * @param array $request    Input values
-   * @return redirect     to account_classification_package View
-   */
-  public function delete(Request $request)
-  {
+    /**
+     * Update package (GET + POST)
+     */
+    public function update(Request $request)
+    {
+        $package = DB::table('account_classification_package')->find($request->id);
 
+        if (!$package) {
+            return redirect()->back()->with([
+                'status' => 'Package not found',
+                'alert-type' => 'error'
+            ]);
+        }
 
-    if (Auth::guard('admin')->check()) {
+        if ($request->isMethod('get')) {
+            return view('backend.account_classification_package.edit', [
+                'page_title'  => $this->page_title,
+                'page_header' => 'Update Account Classification Package',
+                'result'      => $package,
+            ]);
+        }
 
-      $account_classification_packageData = DB::table('account_classification_package')->where('id', $request->id)->first();
-      $account_classification_package_code = $account_classification_packageData->classification_name;
+        $validated = $request->validate([
+            'classification_name' => 'required|unique:account_classification_package,classification_name,' . $package->id,
+            'price'               => 'required|numeric|min:0',
+            'features'            => 'nullable|string',
+        ]);
 
-      $user = DB::table('users_personalinfo')->where('account_classification', $account_classification_package_code)->first();
+        DB::table('account_classification_package')
+            ->where('id', $package->id)
+            ->update([
+                'classification_name' => $validated['classification_name'],
+                'price'               => $validated['price'],
+                'features'            => $validated['features'] ?? null,
+                'updated_at'          => Carbon::now(),
+            ]);
 
-      if ($user) {
-        $notification = array(
-          'status' => 'Some User have this account_classification_package. So, We cannot delete the account_classification_package.',
-          'alert-type' => 'error'
-        );
-      } else {
-        $delete = DB::table('account_classification_package')->where('id', $request->id)->delete();
-        $notification = array(
-          'status' => 'account_classification_package Information Deleted Successfully',
-          'alert-type' => 'success'
-        );
-      }
-
-      return redirect()->back()->with($notification);
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
+        return redirect()->back()->with([
+            'status' => 'Data updated successfully',
+            'alert-type' => 'success'
+        ]);
     }
-  }
+
+    /**
+     * Delete package
+     */
+    public function delete(Request $request)
+    {
+        $package = DB::table('account_classification_package')->find($request->id);
+
+        if (!$package) {
+            return redirect()->back()->with([
+                'status' => 'Package not found',
+                'alert-type' => 'error'
+            ]);
+        }
+
+        $isUsed = DB::table('users_personalinfo')
+            ->where('account_classification', $package->classification_name)
+            ->exists();
+
+        if ($isUsed) {
+            return redirect()->back()->with([
+                'status' => 'This package is already assigned to users and cannot be deleted',
+                'alert-type' => 'error'
+            ]);
+        }
+
+        DB::table('account_classification_package')->where('id', $package->id)->delete();
+
+        return redirect()->back()->with([
+            'status' => 'Account classification package deleted successfully',
+            'alert-type' => 'success'
+        ]);
+    }
 }

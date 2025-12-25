@@ -1,245 +1,166 @@
 <?php
 
-
-
 namespace App\Http\Controllers;
 
-
-
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
-
-use Illuminate\Pagination\Paginator;
-
-use Illuminate\Support\Facades\Storage;
-
-use App\Models\Admin;
-
-use App\Models\User;
-
-use Illuminate\Http\File;
-
 use Illuminate\Support\Facades\Auth;
-
-use Session;
-
-
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Http;
 
 class PostalCodeController extends Controller
-
 {
+    protected string $page_title = 'Admin Panel';
 
-  public function __construct()
-  {
+    public function __construct()
+    {
+        Paginator::useBootstrap();
+    }
 
-    $this->page_title = 'Admin Panel';
-  }
+    /**
+     * List all postal codes for the authenticated user
+     */
+    public function index()
+    {
+        $postalCodes = DB::table('users_postalcode')
+            ->where('user_id', Auth::id())
+            ->orderByDesc('id')
+            ->get();
 
-  public function index()
-  {
+        return view('backend.postalCode.index', [
+            'page_title'  => $this->page_title,
+            'main_menu'   => 'admin',
+            'page_header' => 'Postal Information',
+        ], compact('postalCodes'));
+    }
 
+    /**
+     * Show form to add postal code
+     */
+    public function create()
+    {
+        return view('backend.postalCode.add', [
+            'page_title'  => $this->page_title,
+            'main_menu'   => 'admin',
+            'page_header' => 'Add Postal Information',
+        ]);
+    }
 
-    Paginator::useBootstrap();
-    $result = DB::table('users_postalcode')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+    /**
+     * Store postal code using external API
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'postcode' => 'required',
+            'hnumber'  => 'required',
+        ]);
 
-    return view('backend.postalCode.index', [
-      'page_title' => $this->page_title,
-      'main_menu' => 'admin',
-      'page_header' => 'Postal Information',
+        $userId = Auth::id();
+        $postcode = $request->postcode;
+        $hnumber  = $request->hnumber;
 
-    ], compact('result'));
-  }
+        // Check if postal code already exists
+        $exists = DB::table('users_postalcode')
+            ->where('user_id', $userId)
+            ->where('postcode', $postcode)
+            ->where('hnumber', $hnumber)
+            ->exists();
 
-  public function add(Request $request)
-  {
+        if ($exists) {
+            return redirect()->route('postal_list')->with([
+                'status' => 'Postal Information Already Exists',
+                'alert-type' => 'error',
+            ]);
+        }
 
+        // Call external API
+        $tokenKey = "dbbb694d-13b6-4c9c-90be-10940e69fb39";
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $tokenKey
+        ])->get('https://postcode.tech/api/v1/postcode/full', [
+            'postcode' => $postcode,
+            'number'   => $hnumber,
+        ]);
 
-    if (!$_POST) {
-      return view('backend.postalCode.add', [
+        if (!$response->successful() || empty($response->json())) {
+            return redirect()->route('postal_list')->with([
+                'status' => 'Invalid Postal Code or Number',
+                'alert-type' => 'error',
+            ]);
+        }
 
-        'page_title' => $this->page_title,
-        'main_menu' => 'admin',
-        'page_header' => 'Add Postal Information',
-      ]);
-    } else if ($request->submit) {
+        $data = $response->json();
 
-      $validatedData = $request->validate(['postcode' => 'required', 'hnumber' => 'required']);
-      $post['user_id'] = Auth::user()->id;
-      $postcode = $request->postcode;
-      $hnumber  = $request->hnumber;
-      $tokenKey = "dbbb694d-13b6-4c9c-90be-10940e69fb39";
+        // Save to database
+        DB::table('users_postalcode')->insert([
+            'user_id'       => $userId,
+            'postcode'      => $data['postcode'] ?? $postcode,
+            'hnumber'       => $data['number'] ?? $hnumber,
+            'street'        => $data['street'] ?? null,
+            'city'          => $data['city'] ?? null,
+            'municipality'  => $data['municipality'] ?? null,
+            'province'      => $data['province'] ?? null,
+            'geoLat'        => $data['geo']['lat'] ?? null,
+            'geoLon'        => $data['geo']['lon'] ?? null,
+        ]);
 
-      $options = array('http' => array(
-        'method'  => 'GET',
-        'header' => 'Authorization: Bearer ' . $tokenKey
-      ));
-      $context  = stream_context_create($options);
-
-      $contents = @file_get_contents('https://postcode.tech/api/v1/postcode/full?postcode=' . $postcode . '&number=' . $hnumber, false, $context);
-      $dataResult = json_decode($contents);
-      //print_r($dataResult); exit;
-
-      if ($dataResult) :
-
-        $postcode2 = $dataResult->postcode;
-        $hnumber2 = $dataResult->number;
-
-        $dataExist = DB::table('users_postalcode')->where('user_id', Auth::user()->id)->where('postcode', $postcode2)->where('hnumber', $hnumber2)->get();
-
-        if (count($dataExist)) :
-          $notification = array(
-            'status' => 'Postal Information Already Exist',
-            'alert-type' => 'error'
-          );
-        else :
-
-          $post['postcode'] = $dataResult->postcode;
-          $post['hnumber'] = $dataResult->number;
-          $post['street']  = $dataResult->street;
-          $post['city']   = $dataResult->city;
-          $post['municipality']      = $dataResult->municipality;
-          $post['province'] = $dataResult->province;
-          $post['geoLat'] = $dataResult->geo->lat;
-          $post['geoLon'] = $dataResult->geo->lon;
-
-          $insertData = DB::table('users_postalcode')->insert($post);
-          $notification = array(
+        return redirect()->route('postal_list')->with([
             'status' => 'Postal Information Saved Successfully',
-            'alert-type' => 'success'
-          );
-
-        endif;
-      else :
-        $notification = array(
-          'status' => 'Invalid Postal Code or Number',
-          'alert-type' => 'error'
-        );
-
-      endif;
-
-      return redirect()->route('postal_list')->with($notification);
+            'alert-type' => 'success',
+        ]);
     }
-  }
 
-  public function add2(Request $request)
-  {
-
-
-    if (!$_POST) {
-      return view('backend.postalCode.add2', [
-        'page_title' => $this->page_title,
-        'main_menu' => 'admin',
-        'page_header' => 'Add Postal Information',
-      ]);
-    } else if ($request->submit) {
-
-      $validatedData = $request->validate([
-        'postcode'   => 'required',
-        'hnumber'    => 'required',
-      ]);
-
-
-      $postcode2 = $request->postcode;
-      $hnumber2 = $request->number;
-
-      $dataExist = DB::table('users_postalcode')->where('user_id', Auth::user()->id)->where('postcode', $postcode2)->where('hnumber', $hnumber2)->get();
-
-      if (count($dataExist)) :
-        $notification = array(
-          'status' => 'Postal Information Already Exist',
-          'alert-type' => 'error'
-        );
-      else :
-
-        $post = array();
-        $post['user_id'] = Auth::user()->id;
-        $post['postcode'] = $request->postcode;
-        $post['hnumber'] = $request->hnumber;
-        $post['street']  = $request->street;
-        $post['city']   = $request->city;
-        $post['municipality']      = $request->municipality;
-        $post['province'] = $request->province;
-        $post['geoLat'] = $request->geoLat;
-        $post['geoLon'] = $request->geoLon;
-
-        $insertData = DB::table('users_postalcode')->insert($post);
-        $notification = array(
-          'status' => 'Postal Information Saved Successfully',
-          'alert-type' => 'success'
-        );
-      endif;
-
-      return redirect()->route('postal_list')->with($notification);
+    /**
+     * Show edit form
+     */
+    public function edit($id)
+    {
+        $postal = DB::table('users_postalcode')->where('id', $id)->first();
+        return view('backend.postalCode.edit', [
+            'page_title'  => $this->page_title,
+            'main_menu'   => 'admin',
+            'page_header' => 'Update Postal Information',
+        ], compact('postal'));
     }
-  }
 
-  public function update(Request $request)
+    /**
+     * Update postal code
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'postcode' => 'required',
+            'hnumber'  => 'required',
+        ]);
 
-  {
+        DB::table('users_postalcode')->where('id', $id)->update([
+            'postcode'      => $request->postcode,
+            'hnumber'       => $request->hnumber,
+            'street'        => $request->street,
+            'city'          => $request->city,
+            'municipality'  => $request->municipality,
+            'province'      => $request->province,
+            'geoLat'        => $request->geoLat,
+            'geoLon'        => $request->geoLon,
+        ]);
 
-    if (!$_POST) {
-
-      $result = DB::table('users_postalcode')->where('id', $request->id)->first();
-
-      return view('backend.postalCode.edit', [
-        'page_title' => $this->page_title,
-        'main_menu' => 'admin',
-        'page_header' => 'Update Postal Information',
-      ], compact('result'));
-    } else if ($request->submit) {
-
-      $validatedData = $request->validate([
-        'postcode'   => 'required',
-        'hnumber'    => 'required',
-      ]);
-
-
-
-      $id = $request->id;
-
-      $post = array();
-      $post['postcode'] = $request->postcode;
-      $post['hnumber'] = $request->hnumber;
-      $post['street']  = $request->street;
-      $post['city']   = $request->city;
-      $post['municipality']      = $request->municipality;
-      $post['province'] = $request->province;
-      $post['geoLat'] = $request->geoLat;
-      $post['geoLon'] = $request->geoLon;
-
-      $updateData = DB::table('users_postalcode')->where('id', $id)->update($post);
-
-
-
-      $notification = array(
-        'status' => 'Data Updated Successfully',
-        'alert-type' => 'success'
-      );
-      return redirect()->route('postal_list')->with($notification);
+        return redirect()->route('postal_list')->with([
+            'status' => 'Postal Information Updated Successfully',
+            'alert-type' => 'success',
+        ]);
     }
-  }
 
-  /**
+    /**
+     * Delete postal code
+     */
+    public function destroy($id)
+    {
+        DB::table('users_postalcode')->where('id', $id)->delete();
 
-   * Delete 
-
-   *
-
-   * @param array $request    Input values
- 
-   * @return redirect     to View
-
-   */
-
-  public function delete(Request $request)
-
-  {
-    $delete = DB::table('users_postalcode')->where('id', $request->id)->delete();
-    $notification = array(
-      'status' => 'Postal Information Deleted Successfully',
-      'alert-type' => 'success'
-    );
-    return redirect()->back()->with($notification);
-  }
+        return redirect()->back()->with([
+            'status' => 'Postal Information Deleted Successfully',
+            'alert-type' => 'success',
+        ]);
+    }
 }

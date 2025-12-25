@@ -54,13 +54,13 @@ endif;
 
 <div id="dashboard" class="dashboard" <?php echo $dashboad_style ?>>
     <!-- <li class="nav-item">
-        <a href="{{ route('driver.dashboard')}}" onClick="divmenu('dashboard')" class="nav-link active">
+        <a href="<?php echo e(route('driver.dashboard')); ?>" onClick="divmenu('dashboard')" class="nav-link active">
             <div class="row">
                 <div class="col-2 text-center">
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/4-rounded-squares.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/4-rounded-squares.svg')); ?>\" /
                     <p>General</p>
                 </div>
                 <div class="col-2 text-center">
@@ -77,7 +77,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/user (1).svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/user (1).svg')); ?>\" /
                     <p>Profile</p>
                 </div>
                 <div class="col-2 text-center">
@@ -94,7 +94,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/delivery.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/delivery.svg')); ?>\" /
                     <p>Dispatch</p>
                 </div>
                 <div class="col-2 text-center">
@@ -112,7 +112,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/chat-bubbles-with-ellipsis.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/chat-bubbles-with-ellipsis.svg')); ?>\" /
                     <p>Contact</p>
                 </div>
                 <div class="col-2 text-center">
@@ -131,7 +131,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/chat-bubbles-with-ellipsis.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/chat-bubbles-with-ellipsis.svg')); ?>\" /
                     <p>Groups</p>
                 </div>
                 <div class="col-2 text-center">
@@ -149,7 +149,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/management.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/management.svg')); ?>\" /
                     <p>CRM</p>
                 </div>
                 <div class="col-2 text-center">
@@ -169,7 +169,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/car.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/car.svg')); ?>\" /
                     <p>Vehicle</p>
                 </div>
                 <div class="col-2 text-center">
@@ -187,7 +187,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/admin.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/admin.svg')); ?>\" /
                     <p>Administration</p>
                 </div>
                 <div class="col-2 text-center">
@@ -205,7 +205,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/level-up.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/level-up.svg')); ?>\" /
                     <p>Upgrade</p>
                 </div>
                 <div class="col-2 text-center">
@@ -225,7 +225,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/settings.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/settings.svg')); ?>\" /
                     <p>Settings</p>
                 </div>
                 <div class="col-2 text-center">
@@ -245,8 +245,8 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <svg data-src="{{ asset('icons/layoutIcons/user.svg') }}" class="nav-icon" fill="red"></svg>
-                    <!--	<img class="nav-icon" src="{{ asset('icons/layoutIcons/user.svg') }}" />-->
+                    <svg data-src="<?php echo e(asset('icons/layoutIcons/user.svg')); ?>" class="nav-icon" fill="red"></svg>
+                    <!--	<img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/user.svg')); ?>" />-->
                     <p>Chat
                     </p>
                 </div>
@@ -259,14 +259,14 @@ endif;
 </div>
 <div id="groups" class="groups" <?php echo $groups_style; ?>>
     <li class="nav-item">
-        <a href="{{ route('group')}}" class="nav-link">
+        <a href="<?php echo e(route('group')); ?>" class="nav-link">
 
             <div class="row">
                 <div class="col-2 text-center">
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-<svg data-src="{{ asset('icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
+<svg data-src="<?php echo e(asset('icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
                     <p>My Groups
                     </p>
                 </div>
@@ -278,13 +278,13 @@ endif;
         </a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('group_have_joined')}}" class="nav-link">
+        <a href="{{ route('group_have_joined')); ?>" class="nav-link">
             <div class="row">
                 <div class="col-2 text-center">
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/team.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/team.svg')); ?>\" /
                     <p>Other Groups
                     </p>
                 </div>
@@ -298,14 +298,14 @@ endif;
 <div id="profile" class="profile" <?php echo $profile_style; ?>>
     <li class="nav-item">
 
-        <a href="{{ route('my_profile')}}" class="nav-link">
+        <a href="<?php echo e(route('my_profile')); ?>" class="nav-link">
 
             <div class="row">
                 <div class="col-2 text-center">
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/user (1).svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/user (1).svg')); ?>\" /
                     <p>My Profile
                     </p>
                 </div>
@@ -319,14 +319,14 @@ endif;
 <div id="settings" class="settings" <?php echo $settings_style; ?>>
     <li class="nav-item">
 
-        <a href="{{ route('profileUpdate')}}" class="nav-link">
+        <a href="<?php echo e(route('profileUpdate')); ?>" class="nav-link">
 
             <div class="row">
                 <div class="col-2 text-center">
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/user (1).svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/user (1).svg')); ?>\" /
                     <p>Profile
                     </p>
                 </div>
@@ -338,14 +338,14 @@ endif;
     </li>
     <li class="nav-item">
 
-        <a href="{{ route('vehicle_list')}}" class="nav-link">
+        <a href="<?php echo e(route('vehicle_list')); ?>" class="nav-link">
 
             <div class="row">
                 <div class="col-2 text-center">
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/car.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/car.svg')); ?>\" /
                     <p>Vehicle
                     </p>
                 </div>
@@ -359,13 +359,13 @@ endif;
 <div id="dispatch" class="dispatch" <?php echo $dispatch_style; ?>>
     <li class="nav-item ">
 
-        <a href="{{ route('dispatch_create')}}" class="nav-link ">
+        <a href="<?php echo e(route('dispatch_create')); ?>" class="nav-link ">
             <div class="row">
                 <div class="col-2 text-center">
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <img class="nav-icon" src="{{ asset('icons/layoutIcons/delivery.svg') }}\" /
+                    <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/delivery.svg')); ?>\" /
                     <p>Dispatch
                     </p>
                 </div>
@@ -377,16 +377,16 @@ endif;
     </li>
 
     <li class="nav-item">
-        <a href="{{ route('user_list')}}" onClick="divmenu('dispatch')" class="nav-link">
+        <a href="<?php echo e(route('user_list')); ?>" onClick="divmenu('dispatch')" class="nav-link">
             <div class="row">
                 <div class="col-2 text-center">
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <svg data-src="{{ asset('icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
+                    <svg data-src="<?php echo e(asset('icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
 
 
-                    <!--	<img class="nav-icon" src="{{ asset('icons/layoutIcons/user.svg') }}\" /-->
+                    <!--	<img class="nav-icon" src="{{ asset('icons/layoutIcons/user.svg')); ?>\" /-->
                     <p>Drivers List
                     </p>
                 </div>
@@ -400,13 +400,13 @@ endif;
 
 
     <!-- <li class="nav-item">
-                <a href="{{ route('auto_assign_rule')}}" class="nav-link">
+                <a href="<?php echo e(route('auto_assign_rule')); ?>" class="nav-link">
                     <div class="row">
                         <div class="col-2 text-center">
                             <div class="left"> </div>
                         </div>
                         <div class="col center-content">
-                            <img class="nav-icon" src="{{ asset('icons/layoutIcons/check.svg') }}\" /
+                            <img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/check.svg')); ?>\" /
                             <p>Auto Assign
                             </p>
                         </div>
@@ -483,3 +483,4 @@ endif;
             }
         }
     </script>
+<?php /**PATH D:\Dream\Laravel Deep Learning\zyco\resources\views/backend/driver_menus.blade.php ENDPATH**/ ?>

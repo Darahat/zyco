@@ -1,191 +1,158 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Admin;
-use App\Models\User;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
-use Session;
 
-class CurrencyController extends Controller
-{
-	public function __construct()
-	{
-		$this->page_title = 'Admin Panel';
-	}
-	public function index()
-	{
-		if (Auth::guard('admin')->check()) {
+				class CurrencyController extends Controller
+				{
+				    protected string $page_title = 'Admin Panel';
 
-			Paginator::useBootstrap();
-			$result = DB::table('currency')->orderBy('id', 'DESC')->get();
-			return view('backend.currency.index', [
-				'page_title' => $this->page_title,
-				'main_menu' => 'admin',
-				'page_header' => 'currency',
+				    public function __construct()
+				    {
+				        Paginator::useBootstrap();
+				    }
 
-			], compact('result'));
-		} else {
-			$notification = array(
-				'status' => 'You are not allowed to access',
-				'alert-type' => 'error'
-			);
-			return redirect("adminLoginForm")->with($notification);
-		}
-	}
+				    /**
+				     * Currency list
+				     */
+				    public function index()
+				    {
+				        if (!Auth::guard('admin')->check()) {
+				            return redirect('adminLoginForm')->with([
+				                'status'     => 'You are not allowed to access',
+				                'alert-type' => 'error',
+				            ]);
+				        }
 
-	/**
-	 * Add a New currency
-	 *
-	 * @param array $request  Input values
-	 * @return redirect     to currency view
-	 */
-	public function add(Request $request)
-	{
-		if (!$_POST) {
-			return view('backend.currency.add', [
-				'page_title' => $this->page_title,
-				'main_menu' => 'admin',
-				'page_header' => 'Add New currency',
+				        $result = DB::table('currency')
+				            ->orderByDesc('id')
+				            ->get();
 
-			]);
-		} else if ($request->submit) {
+				        return view('backend.currency.index', [
+				            'page_title'  => $this->page_title,
+				            'main_menu'   => 'admin',
+				            'page_header' => 'Currency',
+				            'result'      => $result,
+				        ]);
+				    }
 
-			$validatedData = $request->validate([
-				'name' => 'required|unique:currency',
-				'code' => 'required|unique:currency',
-				'symbol'  => 'required|unique:currency',
-				'rate'  => 'required|unique:currency',
-				'status' => 'required',
-			]);
+				    /**
+				     * Add new currency (GET + POST)
+				     */
+				    public function add(Request $request)
+				    {
+				        if ($request->isMethod('get')) {
+				            return view('backend.currency.add', [
+				                'page_title'  => $this->page_title,
+				                'main_menu'   => 'admin',
+				                'page_header' => 'Add New Currency',
+				            ]);
+				        }
 
-			$post = array();
-			$post['name'] = $request->name;
-			$post['code'] = $request->code;
-			$post['symbol'] = $request->symbol;
-			$post['rate'] = $request->rate;
-			$post['status'] = $request->status;
-			$insertData = DB::table('currency')->insert($post);
+				        $validated = $request->validate([
+				            'name'   => 'required|string|max:255|unique:currency,name',
+				            'code'   => 'required|string|max:50|unique:currency,code',
+				            'symbol' => 'required|string|max:20|unique:currency,symbol',
+				            'rate'   => 'required|numeric',
+				            'status' => 'required|in:0,1',
+				        ]);
 
-			if ($insertData) {
-				$notification = array(
-					'status' => 'Currency Information Saved Successfully',
-					'alert-type' => 'success'
-				);
-				return redirect('admin/currency')->with($notification);
-			} else {
-				$notification = array(
-					'status' => 'Currency Information Save failed',
-					'alert-type' => 'error'
-				);
-				return redirect('admin/currency')->with($notification);
-			}
-		} else {
-			$notification = array(
-				'status' => 'You are not allowed to access',
-				'alert-type' => 'error'
-			);
-			return redirect()->back()->with($notification);
-		}
-	}
+				        DB::table('currency')->insert($validated);
 
-	/**
-	 * Update currency Details
-	 *
-	 * @param array $request    Input values
-	 * @return redirect     to currency View
-	 */
-	public function update(Request $request)
-	{
-		if (!$_POST) {
+				        return redirect('admin/currency')->with([
+				            'status'     => 'Currency information saved successfully',
+				            'alert-type' => 'success',
+				        ]);
+				    }
 
-			if (Auth::guard('admin')->check()) {
+				    /**
+				     * Update currency (GET + POST)
+				     */
+				    public function update(Request $request)
+				    {
+				        if ($request->isMethod('get')) {
+				            $result = DB::table('currency')->find($request->id);
 
-				$result = DB::table('currency')->where('id', $request->id)->first();
+				            if (!$result) {
+				                return redirect()->back()->with([
+				                    'status'     => 'Currency not found',
+				                    'alert-type' => 'error',
+				                ]);
+				            }
 
-				return view('backend.currency.edit', [
-					'page_title' => $this->page_title,
-					'main_menu' => 'admin',
-					'page_header' => 'Update Currency Information',
-				], compact('result'));
-			}
-		} else if ($request->submit) {
+				            return view('backend.currency.edit', [
+				                'page_title'  => $this->page_title,
+				                'main_menu'   => 'admin',
+				                'page_header' => 'Update Currency Information',
+				                'result'      => $result,
+				            ]);
+				        }
 
-			$validatedData = $request->validate([
-				'name' => 'required',
-				'code' => 'required',
-				'symbol'  => 'required',
-				'rate'  => 'required',
-				'status' => 'required',
-			]);
+				        $validated = $request->validate([
+				            'id'     => 'required|exists:currency,id',
+				            'name'   => 'required|string|max:255',
+				            'code'   => 'required|string|max:50',
+				            'symbol' => 'required|string|max:20',
+				            'rate'   => 'required|numeric',
+				            'status' => 'required|in:0,1',
+				        ]);
 
-			//return response()->json( $validatedData );
+				        DB::table('currency')
+				            ->where('id', $validated['id'])
+				            ->update([
+				                'name'   => $validated['name'],
+				                'code'   => $validated['code'],
+				                'symbol' => $validated['symbol'],
+				                'rate'   => $validated['rate'],
+				                'status' => $validated['status'],
+				            ]);
 
-			$id = $request->id;
-			$post = array();
-			$post['name'] = $request->name;
-			$post['code'] = $request->code;
-			$post['symbol'] = $request->symbol;
-			$post['rate'] = $request->rate;
-			$post['status'] = $request->status;
-			$UpdateData = DB::table('currency')->where('id', $id)->update($post);
+				        return redirect('admin/currency')->with([
+				            'status'     => 'Currency updated successfully',
+				            'alert-type' => 'success',
+				        ]);
+				    }
 
-			$notification = array(
-				'status' => 'Data Updated Successfully',
-				'alert-type' => 'success'
-			);
-			return redirect('admin/currency')->with($notification);
-		} else {
-			$notification = array(
-				'status' => 'You are not allowed to access',
-				'alert-type' => 'error'
-			);
-			return redirect()->back()->with($notification);
-		}
-	}
+				    /**
+				     * Delete currency
+				     */
+				    public function delete(Request $request)
+				    {
+				        if (!Auth::guard('admin')->check()) {
+				            return redirect()->back()->with([
+				                'status'     => 'You are not allowed to access',
+				                'alert-type' => 'error',
+				            ]);
+				        }
 
-	/**
-	 * Delete currency
-	 *
-	 * @param array $request    Input values
-	 * @return redirect     to currency View
-	 */
-	public function delete(Request $request)
-	{
+				        $currency = DB::table('currency')->find($request->id);
 
+				        if (!$currency) {
+				            return redirect()->back()->with([
+				                'status'     => 'Currency not found',
+				                'alert-type' => 'error',
+				            ]);
+				        }
 
-		if (Auth::guard('admin')->check()) {
+				        $inUse = DB::table('users')
+				            ->where('currency_code', $currency->code)
+				            ->exists();
 
-			$currencyData = DB::table('currency')->where('id', $request->id)->first();
-			$currency_code = $currencyData->code;
+				        if ($inUse) {
+				            return redirect()->back()->with([
+				                'status'     => 'Some users are using this currency. Deletion not allowed.',
+				                'alert-type' => 'error',
+				            ]);
+				        }
 
-			$user = DB::table('users')->where('currency_code', $currency_code)->first();
+				        DB::table('currency')->where('id', $currency->id)->delete();
 
-			if ($user) {
-				$notification = array(
-					'status' => 'Some User have this currency. So, We cannot delete the currency.',
-					'alert-type' => 'error'
-				);
-			} else {
-				$delete = DB::table('currency')->where('id', $request->id)->delete();
-				$notification = array(
-					'status' => 'currency Information Deleted Successfully',
-					'alert-type' => 'success'
-				);
-			}
-
-			return redirect()->back()->with($notification);
-		} else {
-			$notification = array(
-				'status' => 'You are not allowed to access',
-				'alert-type' => 'error'
-			);
-			return redirect()->back()->with($notification);
-		}
-	}
-}
+				        return redirect()->back()->with([
+				            'status'     => 'Currency information deleted successfully',
+				            'alert-type' => 'success',
+				        ]);
+				    }
+				}

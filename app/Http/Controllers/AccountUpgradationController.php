@@ -4,201 +4,155 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Admin;
-use App\Models\User;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
-use Session;
+use Illuminate\Pagination\Paginator;
+use Carbon\Carbon;
 
 class AccountUpgradationController extends Controller
 {
-	public function __construct()
-	{
-		$this->page_title = 'Admin Panel';
-	}
-	public function index()
-	{
-		if (Auth::guard('admin')->check()) {
+    protected string $page_title = 'Admin Panel';
 
-			Paginator::useBootstrap();
-			$result = DB::table('users_personalinfo')->whereColumn('account_classification', '!=', 'application_for_account_upgrade')->orderBy('id', 'DESC')->get();
-			$package_name = DB::table('account_classification_package')->where('status', 'Active')->orderBy('id', 'DESC')->get();
-			return view('backend.account_upgradation_application.index', [
-				'page_title' => $this->page_title,
-				'page_header' => 'Account upgradation application',
-				'main_menu' => 'admin',
+    public function __construct()
+    {
+        Paginator::useBootstrap();
 
-			], compact('result', 'package_name'));
-		} else {
-			$notification = array(
-				'status' => 'You are not allowed to access',
-				'alert-type' => 'error'
-			);
-			return redirect("adminLoginForm")->with($notification);
-		}
-	}
+        $this->middleware(function ($request, $next) {
+            if (!Auth::guard('admin')->check()) {
+                return redirect()
+                    ->route('adminLoginForm')
+                    ->with([
+                        'status' => 'You are not allowed to access',
+                        'alert-type' => 'error',
+                    ]);
+            }
+            return $next($request);
+        })->except(['upgrade_profile_packages']);
+    }
 
-	/**
-	 * Add a New Country
-	 *
-	 * @param array $request  Input values
-	 * @return redirect     to Country view
-	 */
-	public function add(Request $request)
-	{
-		if (!$_POST) {
-			$users_personalinfo =  DB::table('users_personalinfo')->where('account_classification', '!=', 'Enterprise')->get();
-			return view('backend.account_upgradation_application.add', [
-				'page_title' => $this->page_title,
-				'page_header' => 'Add New Account Upgradation Application',
-				'main_menu' => 'dispatch',
+    /**
+     * Admin: List account upgradation applications
+     */
+    public function index()
+    {
+        $result = DB::table('users_personalinfo')
+            ->whereColumn('account_classification', '!=', 'application_for_account_upgrade')
+            ->orderByDesc('id')
+            ->get();
 
-			], compact('users_personalinfo'));
-		} else if ($request->submit) {
-			//  dd($request->all());
-			//  exit;
-			$validatedData = $request->validate([
-				'user_id' => 'required|unique:users_personalinfo',
-				'classification_name'  => 'required',
+        $package_name = DB::table('account_classification_package')
+            ->where('status', 'Active')
+            ->orderByDesc('id')
+            ->get();
 
-			]);
+        return view('backend.account_upgradation_application.index', [
+            'page_title'  => $this->page_title,
+            'page_header' => 'Account Upgradation Applications',
+            'main_menu'   => 'admin',
+            'result'      => $result,
+            'package_name'=> $package_name,
+        ]);
+    }
 
-			$post = array();
-			$post['user_id'] = $request->user_id;
-			$post['classification_name'] = $request->classification_name;
+    /**
+     * Admin: Create account upgradation request
+     */
+    public function add(Request $request)
+    {
+        if ($request->isMethod('get')) {
 
-			$insertData = DB::table('users_personalinfo')->insert($post);
+            $users_personalinfo = DB::table('users_personalinfo')
+                ->where('account_classification', '!=', 'Enterprise')
+                ->get();
 
-			if ($insertData) {
-				$notification = array(
-					'status' => 'Account Upgradation Application Information Saved Successfully',
-					'alert-type' => 'success'
-				);
-				return redirect()->back()->with($notification);
-			} else {
-				$notification = array(
-					'status' => 'Account Upgradation Application Information Save failed',
-					'alert-type' => 'error'
-				);
-				return redirect()->back()->with($notification);
-			}
-		} else {
-			$notification = array(
-				'status' => 'You are not allowed to access',
-				'alert-type' => 'error'
-			);
-			return redirect()->back()->with($notification);
-		}
-	}
+            return view('backend.account_upgradation_application.add', [
+                'page_title'  => $this->page_title,
+                'page_header' => 'Add Account Upgradation Application',
+                'main_menu'   => 'admin',
+                'users_personalinfo' => $users_personalinfo,
+            ]);
+        }
 
-	/**
-	 * Update Country Details
-	 *
-	 * @param array $request    Input values
-	 * @return redirect     to Country View
-	 */
-	public function update(Request $request)
-	{
-		if (!$_POST) {
+        $validated = $request->validate([
+            'user_id'              => 'required|exists:users,id',
+            'classification_name'  => 'required|exists:account_classification_package,classification_name',
+        ]);
 
-			if (Auth::guard('admin')->check()) {
+        DB::table('users_personalinfo')
+            ->where('user_id', $validated['user_id'])
+            ->update([
+                'application_for_account_upgrade' => $validated['classification_name'],
+                'updated_at' => Carbon::now(),
+            ]);
 
-				$result = DB::table('country')->where('id', $request->id)->first();
+        return redirect()->back()->with([
+            'status' => 'Account upgradation request submitted successfully',
+            'alert-type' => 'success',
+        ]);
+    }
 
-				return view('backend.account_upgradation_application.edit', [
-					'page_title' => $this->page_title,
-					'page_header' => 'Update Account Upgradation Application Information',
-					'main_menu' => 'dispatch',
-				], compact('result'));
-			}
-		} else if ($request->submit) {
+    /**
+     * Admin: Approve / Update account upgradation
+     */
+    public function update(Request $request)
+    {
+        $personalInfo = DB::table('users_personalinfo')->find($request->id);
 
-			$validatedData = $request->validate([
-				'short_name' => 'required',
-				'long_name'  => 'required',
-				'phone_code' => 'required',
-			]);
+        if (!$personalInfo) {
+            return redirect()->back()->with([
+                'status' => 'Record not found',
+                'alert-type' => 'error',
+            ]);
+        }
 
-			//return response()->json( $validatedData );
+        if ($request->isMethod('get')) {
+            return view('backend.account_upgradation_application.edit', [
+                'page_title'  => $this->page_title,
+                'page_header' => 'Update Account Upgradation',
+                'main_menu'   => 'admin',
+                'result'      => $personalInfo,
+            ]);
+        }
 
-			$id = $request->id;
-			$post = array();
-			$post['short_name'] = $request->short_name;
-			$post['long_name'] = $request->long_name;
-			$post['iso3'] = $request->iso3;
-			$post['num_code'] = $request->num_code;
-			$post['phone_code'] = $request->phone_code;
-			$UpdateData = DB::table('country')->where('id', $id)->update($post);
+        $validated = $request->validate([
+            'account_classification' => 'required|exists:account_classification_package,classification_name',
+        ]);
 
-			$notification = array(
-				'status' => 'Data Updated Successfully',
-				'alert-type' => 'success'
-			);
-			return redirect('admin/country')->with($notification);
-		} else {
-			$notification = array(
-				'status' => 'You are not allowed to access',
-				'alert-type' => 'error'
-			);
-			return redirect()->back()->with($notification);
-		}
-	}
+        DB::table('users_personalinfo')
+            ->where('id', $personalInfo->id)
+            ->update([
+                'account_classification' => $validated['account_classification'],
+                'application_for_account_upgrade' => null,
+                'updated_at' => Carbon::now(),
+            ]);
 
-	/**
-	 * Delete Country
-	 *
-	 * @param array $request    Input values
-	 * @return redirect     to Country View
-	 */
-	public function delete(Request $request)
-	{
+        return redirect()->back()->with([
+            'status' => 'Account upgraded successfully',
+            'alert-type' => 'success',
+        ]);
+    }
 
+    /**
+     * User: View upgrade packages
+     */
+    public function upgrade_profile_packages()
+    {
+        Paginator::useBootstrap();
 
-		if (Auth::guard('admin')->check()) {
+        $personalInfo = DB::table('users_personalinfo')
+            ->where('user_id', Auth::id())
+            ->first();
 
-			$countryData = DB::table('country')->where('id', $request->id)->first();
-			$country_code = $countryData->phone_code;
+        $account_classification_package = DB::table('account_classification_package')
+            ->where('status', 'Active')
+            ->orderBy('price', 'ASC')
+            ->get();
 
-			$user = DB::table('users')->where('country_code', $country_code)->first();
-
-			if ($user) {
-				$notification = array(
-					'status' => 'Some User have this Country. So, We cannot delete the country.',
-					'alert-type' => 'error'
-				);
-			} else {
-				$delete = DB::table('country')->where('id', $request->id)->delete();
-				$notification = array(
-					'status' => 'Country Information Deleted Successfully',
-					'alert-type' => 'success'
-				);
-			}
-
-			return redirect()->back()->with($notification);
-		} else {
-			$notification = array(
-				'status' => 'You are not allowed to access',
-				'alert-type' => 'error'
-			);
-			return redirect()->back()->with($notification);
-		}
-	}
-
-	public function upgrade_profile_packages()
-	{
-
-
-		Paginator::useBootstrap();
-		$personalInfo = DB::table('users_personalinfo')->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->first();
-
-		$account_classification_package = DB::table('account_classification_package')->where('status', 'Active')->orderBy('id', 'ASC')->get();
-		return view('backend.profile.upgrade_profile_packages', [
-			'page_title' => $this->page_title,
-			'page_header' => 'Profile Upgradation Packages',
-			'main_menu' => 'dispatch',
-
-		], compact('personalInfo', 'account_classification_package'));
-	}
+        return view('backend.profile.upgrade_profile_packages', [
+            'page_title'  => $this->page_title,
+            'page_header' => 'Profile Upgradation Packages',
+            'main_menu'   => 'dispatch',
+            'personalInfo'=> $personalInfo,
+            'account_classification_package' => $account_classification_package,
+        ]);
+    }
 }

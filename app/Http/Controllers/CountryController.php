@@ -4,185 +4,165 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Admin;
-use App\Models\User;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
-use Session;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Validation\Rule;
 
 class CountryController extends Controller
 {
-  public function __construct()
-  {
-    $this->page_title = 'Admin Panel';
-  }
-  public function index()
-  {
-    if (Auth::guard('admin')->check()) {
+    protected string $page_title = 'Admin Panel';
 
-      Paginator::useBootstrap();
-      $result = DB::table('country')->orderBy('id', 'DESC')->get();
-      return view('backend.country.index', [
-        'page_title' => $this->page_title,
-        'main_menu' => 'admin',
-        'page_header' => 'Country',
+    public function __construct()
+    {
+        // Global settings
+        Paginator::useBootstrap();
 
-      ], compact('result'));
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect("adminLoginForm")->with($notification);
+        // Admin guard protection
+        $this->middleware(function ($request, $next) {
+            if (!Auth::guard('admin')->check()) {
+                return redirect('adminLoginForm')->with([
+                    'status'     => 'You are not allowed to access',
+                    'alert-type' => 'error',
+                ]);
+            }
+            return $next($request);
+        });
     }
-  }
 
-  /**
-   * Add a New Country
-   *
-   * @param array $request  Input values
-   * @return redirect     to Country view
-   */
-  public function add(Request $request)
-  {
-    if (!$_POST) {
-      return view('backend.country.add', [
-        'page_title' => $this->page_title,
-        'main_menu' => 'admin',
-        'page_header' => 'Add New Country',
+    /**
+     * Country list
+     */
+    public function index()
+    {
+        $result = DB::table('country')
+            ->orderByDesc('id')
+            ->get();
 
-      ]);
-    } else if ($request->submit) {
-      //  dd($request->all());
-      //  exit;
-      $validatedData = $request->validate([
-        'short_name' => 'required|unique:country',
-        'long_name'  => 'required|unique:country',
-        'phone_code' => 'required',
-      ]);
-
-      $post = array();
-      $post['short_name'] = $request->short_name;
-      $post['long_name'] = $request->long_name;
-      $post['iso3'] = $request->iso3;
-      $post['num_code'] = $request->num_code;
-      $post['phone_code'] = $request->phone_code;
-      $insertData = DB::table('country')->insert($post);
-
-      if ($insertData) {
-        $notification = array(
-          'status' => 'Country Information Saved Successfully',
-          'alert-type' => 'success'
-        );
-        return redirect('admin/country')->with($notification);
-      } else {
-        $notification = array(
-          'status' => 'Country Information Save failed',
-          'alert-type' => 'error'
-        );
-        return redirect('admin/country')->with($notification);
-      }
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
+        return view('backend.country.index', [
+            'page_title'  => $this->page_title,
+            'main_menu'   => 'admin',
+            'page_header' => 'Country',
+            'result'      => $result,
+        ]);
     }
-  }
 
-  /**
-   * Update Country Details
-   *
-   * @param array $request    Input values
-   * @return redirect     to Country View
-   */
-  public function update(Request $request)
-  {
-    if (!$_POST) {
+    /**
+     * Add new country (GET + POST)
+     */
+    public function add(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            return view('backend.country.add', [
+                'page_title'  => $this->page_title,
+                'main_menu'   => 'admin',
+                'page_header' => 'Add New Country',
+            ]);
+        }
 
-      if (Auth::guard('admin')->check()) {
+        $validated = $request->validate([
+            'short_name' => 'required|string|max:100|unique:country,short_name',
+            'long_name'  => 'required|string|max:150|unique:country,long_name',
+            'iso3'       => 'nullable|string|max:3',
+            'num_code'   => 'nullable|numeric',
+            'phone_code' => 'required|string|max:10',
+        ]);
 
-        $result = DB::table('country')->where('id', $request->id)->first();
+        DB::table('country')->insert($validated);
 
-        return view('backend.country.edit', [
-          'page_title' => $this->page_title,
-          'main_menu' => 'admin',
-          'page_header' => 'Update Country Information',
-        ], compact('result'));
-      }
-    } else if ($request->submit) {
-
-      $validatedData = $request->validate([
-        'short_name' => 'required',
-        'long_name'  => 'required',
-        'phone_code' => 'required',
-      ]);
-
-      //return response()->json( $validatedData );
-
-      $id = $request->id;
-      $post = array();
-      $post['short_name'] = $request->short_name;
-      $post['long_name'] = $request->long_name;
-      $post['iso3'] = $request->iso3;
-      $post['num_code'] = $request->num_code;
-      $post['phone_code'] = $request->phone_code;
-      $UpdateData = DB::table('country')->where('id', $id)->update($post);
-
-      $notification = array(
-        'status' => 'Data Updated Successfully',
-        'alert-type' => 'success'
-      );
-      return redirect('admin/country')->with($notification);
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
+        return redirect('admin/country')->with([
+            'status'     => 'Country information saved successfully',
+            'alert-type' => 'success',
+        ]);
     }
-  }
 
-  /**
-   * Delete Country
-   *
-   * @param array $request    Input values
-   * @return redirect     to Country View
-   */
-  public function delete(Request $request)
-  {
+    /**
+     * Update country (GET + POST)
+     */
+    public function update(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            $result = DB::table('country')->find($request->id);
 
+            if (!$result) {
+                return redirect()->back()->with([
+                    'status'     => 'Country not found',
+                    'alert-type' => 'error',
+                ]);
+            }
 
-    if (Auth::guard('admin')->check()) {
+            return view('backend.country.edit', [
+                'page_title'  => $this->page_title,
+                'main_menu'   => 'admin',
+                'page_header' => 'Update Country Information',
+                'result'      => $result,
+            ]);
+        }
 
-      $countryData = DB::table('country')->where('id', $request->id)->first();
-      $country_code = $countryData->phone_code;
+        $validated = $request->validate([
+            'id' => ['required', 'exists:country,id'],
+            'short_name' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('country', 'short_name')->ignore($request->id),
+            ],
+            'long_name' => [
+                'required',
+                'string',
+                'max:150',
+                Rule::unique('country', 'long_name')->ignore($request->id),
+            ],
+            'iso3'       => 'nullable|string|max:3',
+            'num_code'   => 'nullable|numeric',
+            'phone_code' => 'required|string|max:10',
+        ]);
 
-      $user = DB::table('users')->where('country_code', $country_code)->first();
+        DB::table('country')
+            ->where('id', $validated['id'])
+            ->update([
+                'short_name' => $validated['short_name'],
+                'long_name'  => $validated['long_name'],
+                'iso3'       => $validated['iso3'] ?? null,
+                'num_code'   => $validated['num_code'] ?? null,
+                'phone_code' => $validated['phone_code'],
+            ]);
 
-      if ($user) {
-        $notification = array(
-          'status' => 'Some User have this Country. So, We cannot delete the country.',
-          'alert-type' => 'error'
-        );
-      } else {
-        $delete = DB::table('country')->where('id', $request->id)->delete();
-        $notification = array(
-          'status' => 'Country Information Deleted Successfully',
-          'alert-type' => 'success'
-        );
-      }
-
-      return redirect()->back()->with($notification);
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
+        return redirect('admin/country')->with([
+            'status'     => 'Country information updated successfully',
+            'alert-type' => 'success',
+        ]);
     }
-  }
+
+    /**
+     * Delete country
+     */
+    public function delete(Request $request)
+    {
+        $country = DB::table('country')->find($request->id);
+
+        if (!$country) {
+            return redirect()->back()->with([
+                'status'     => 'Country not found',
+                'alert-type' => 'error',
+            ]);
+        }
+
+        $userExists = DB::table('users')
+            ->where('country_code', $country->phone_code)
+            ->exists();
+
+        if ($userExists) {
+            return redirect()->back()->with([
+                'status'     => 'Some users are using this country. Deletion not allowed.',
+                'alert-type' => 'error',
+            ]);
+        }
+
+        DB::table('country')->where('id', $country->id)->delete();
+
+        return redirect()->back()->with([
+            'status'     => 'Country information deleted successfully',
+            'alert-type' => 'success',
+        ]);
+    }
 }

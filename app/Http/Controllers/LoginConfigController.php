@@ -4,78 +4,68 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Admin;
-use App\Models\User;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
-use Session;
 
 class LoginConfigController extends Controller
 {
-    public $page_title;
+    protected string $page_title = 'Admin Panel';
 
-    public function __construct()
-    {
-        $this->page_title = 'Admin Panel';
-    }
+    /**
+     * Show all login configurations
+     */
     public function index()
     {
-
+        $this->authorizeAdmin();
 
         $result = DB::table('login_config')->get();
 
         return view('admin.loginConfig.index', [
-            'page_title' => $this->page_title,
-            'main_menu' => 'admin_settings',
-            'page_header' => 'login config',
+            'page_title'  => $this->page_title,
+            'main_menu'   => 'admin_settings',
+            'page_header' => 'Login Configurations',
         ], compact('result'));
     }
+
     /**
-     * Add a New language
-     *
-     * @param array $request  Input values
-     * @return redirect     to language view
+     * Add a new login configuration
      */
     public function add(Request $request)
     {
-        if (!$_POST) {
-            return view('backend.language.add', [
-                'page_title' => $this->page_title,
-                'main_menu' => 'informations',
-                'page_header' => 'Add New Language',
+        $this->authorizeAdmin();
+
+        if ($request->isMethod('get')) {
+            return view('admin.loginConfig.add', [
+                'page_title'  => $this->page_title,
+                'main_menu'   => 'admin_settings',
+                'page_header' => 'Add New Login Configuration',
             ]);
-        } else if ($request->submit) {
-            $validatedData = $request->validate([
-                'name' => 'required|unique:language,language_name',
-                'value' => 'required|unique:language,language_code',
-                'status' => 'required',
-            ]);
-            $post = array();
-            $post['language_name'] = $request->name;
-            $post['language_code'] = $request->value;
-            $post['status'] = $request->status;
-            $insertData = DB::table('language')->insert($post);
-            if ($insertData) {
-                $notification = array(
-                    'status' => 'language Information Saved Successfully',
-                    'alert-type' => 'success'
-                );
-                return redirect('admin/language')->with($notification);
-            } else {
-                $notification = array(
-                    'status' => 'language Information Save failed',
-                    'alert-type' => 'error'
-                );
-                return redirect('admin/language')->with($notification);
-            }
-        } else {
-            $notification = array(
-                'status' => 'You are not allowed to access',
-                'alert-type' => 'error'
-            );
-            return redirect()->back()->with($notification);
         }
+
+        // Validate input
+        $request->validate([
+            'login_name'  => 'required|unique:login_config,login_name',
+            'login_value' => 'required|unique:login_config,login_value',
+            'status'      => 'required|in:Active,Inactive',
+        ]);
+
+        // Insert data
+        DB::table('login_config')->insert([
+            'login_name'  => $request->login_name,
+            'login_value' => $request->login_value,
+            'status'      => $request->status,
+        ]);
+
+        return redirect('admin/login-config')->with([
+            'status'     => 'Login configuration saved successfully',
+            'alert-type' => 'success',
+        ]);
+    }
+
+    /**
+     * Admin authorization helper
+     */
+    private function authorizeAdmin(): void
+    {
+        abort_if(!Auth::guard('admin')->check(), 403, 'You are not allowed to access this page.');
     }
 }

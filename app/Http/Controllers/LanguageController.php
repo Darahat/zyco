@@ -5,158 +5,138 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Admin;
-use App\Models\User;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
-use Session;
 
 class LanguageController extends Controller
 {
-  public function __construct()
-  {
-    $this->page_title = 'Admin Panel';
-  }
-  public function index()
-  {
-    if (Auth::guard('admin')->check()) {
-      Paginator::useBootstrap();
-      $result = DB::table('language')->orderBy('id', 'DESC')->get();
-      return view('backend.language.index', [
-        'page_title' => $this->page_title,
-        'main_menu' => 'informations',
-        'page_header' => 'Language',
-      ], compact('result'));
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect("adminLoginForm")->with($notification);
-    }
-  }
-  /**
-   * Add a New language
-   *
-   * @param array $request  Input values
-   * @return redirect     to language view
-   */
-  public function add(Request $request)
-  {
-    if (!$_POST) {
-      return view('backend.language.add', [
-        'page_title' => $this->page_title,
-        'main_menu' => 'informations',
-        'page_header' => 'Add New Language',
-      ]);
-    } else if ($request->submit) {
-      $validatedData = $request->validate([
-        'name' => 'required|unique:language',
-        'value' => 'required|unique:language',
-        'status' => 'required',
-      ]);
-      $post = array();
-      $post['name'] = $request->name;
-      $post['value'] = $request->value;
-      $post['status'] = $request->status;
-      $insertData = DB::table('language')->insert($post);
-      if ($insertData) {
-        $notification = array(
-          'status' => 'language Information Saved Successfully',
-          'alert-type' => 'success'
-        );
-        return redirect('admin/language')->with($notification);
-      } else {
-        $notification = array(
-          'status' => 'language Information Save failed',
-          'alert-type' => 'error'
-        );
-        return redirect('admin/language')->with($notification);
-      }
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
-    }
-  }
-  /**
-   * Update language Details
-   *
-   * @param array $request    Input values
-   * @return redirect     to language View
-   */
-  public function update(Request $request)
-  {
-    if (!$_POST) {
-      if (Auth::guard('admin')->check()) {
-        $result = DB::table('language')->where('id', $request->id)->first();
-        return view('backend.language.edit', [
-          'page_title' => $this->page_title,
-          'main_menu' => 'informations',
-          'page_header' => 'Update Language Information',
-        ], compact('result'));
-      }
-    } else if ($request->submit) {
-      $validatedData = $request->validate([
-        'name' => 'required',
-        'value' => 'required',
-        'status' => 'required',
-      ]);
-      //return response()->json( $validatedData );
-      $id = $request->id;
-      $post = array();
-      $post['name'] = $request->name;
-      $post['value'] = $request->value;
-      $post['status'] = $request->status;
-      $UpdateData = DB::table('language')->where('id', $id)->update($post);
-      $notification = array(
-        'status' => 'Data Updated Successfully',
-        'alert-type' => 'success'
-      );
-      return redirect('admin/language')->with($notification);
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
-    }
-  }
-  /**
-   * Delete language
-   *
-   * @param array $request    Input values
-   * @return redirect     to language View
-   */
-  public function delete(Request $request)
-  {
+    protected string $page_title = 'Admin Panel';
 
-    if (Auth::guard('admin')->check()) {
-      $languageData = DB::table('language')->where('id', $request->id)->first();
-      $language_code = $languageData->value;
-      $user = DB::table('users')->where('language', $language_code)->first();
-      if ($user) {
-        $notification = array(
-          'status' => 'Some User have this language. So, We cannot delete the language.',
-          'alert-type' => 'error'
-        );
-      } else {
-        $delete = DB::table('language')->where('id', $request->id)->delete();
-        $notification = array(
-          'status' => 'language Information Deleted Successfully',
-          'alert-type' => 'success'
-        );
-      }
-      return redirect()->back()->with($notification);
-    } else {
-      $notification = array(
-        'status' => 'You are not allowed to access',
-        'alert-type' => 'error'
-      );
-      return redirect()->back()->with($notification);
+    /**
+     * Language list
+     */
+    public function index()
+    {
+        $this->authorizeAdmin();
+
+        Paginator::useBootstrap();
+
+        $result = DB::table('language')->latest()->get();
+
+        return view('backend.language.index', [
+            'page_title'  => $this->page_title,
+            'main_menu'   => 'informations',
+            'page_header' => 'Language',
+        ], compact('result'));
     }
-  }
+
+    /**
+     * Add language (GET + POST)
+     */
+    public function add(Request $request)
+    {
+        $this->authorizeAdmin();
+
+        if ($request->isMethod('get')) {
+            return view('backend.language.add', [
+                'page_title'  => $this->page_title,
+                'main_menu'   => 'informations',
+                'page_header' => 'Add New Language',
+            ]);
+        }
+
+        $request->validate([
+            'name'   => 'required|unique:language,name',
+            'value'  => 'required|unique:language,value',
+            'status' => 'required|in:Active,Inactive',
+        ]);
+
+        DB::table('language')->insert([
+            'name'   => $request->name,
+            'value'  => $request->value,
+            'status' => $request->status,
+        ]);
+
+        return redirect('admin/language')->with([
+            'status' => 'Language saved successfully',
+            'alert-type' => 'success',
+        ]);
+    }
+
+    /**
+     * Update language (GET + POST)
+     */
+    public function update(Request $request, $id)
+    {
+        $this->authorizeAdmin();
+
+        if ($request->isMethod('get')) {
+
+            $result = DB::table('language')->find($id);
+
+            abort_if(!$result, 404);
+
+            return view('backend.language.edit', [
+                'page_title'  => $this->page_title,
+                'main_menu'   => 'informations',
+                'page_header' => 'Update Language Information',
+            ], compact('result'));
+        }
+
+        $request->validate([
+            'name'   => 'required|unique:language,name,' . $id,
+            'value'  => 'required|unique:language,value,' . $id,
+            'status' => 'required|in:Active,Inactive',
+        ]);
+
+        DB::table('language')
+            ->where('id', $id)
+            ->update([
+                'name'   => $request->name,
+                'value'  => $request->value,
+                'status' => $request->status,
+            ]);
+
+        return redirect('admin/language')->with([
+            'status' => 'Language updated successfully',
+            'alert-type' => 'success',
+        ]);
+    }
+
+    /**
+     * Delete language
+     */
+    public function delete($id)
+    {
+        $this->authorizeAdmin();
+
+        $language = DB::table('language')->find($id);
+
+        abort_if(!$language, 404);
+
+        $isUsed = DB::table('users')
+            ->where('language', $language->value)
+            ->exists();
+
+        if ($isUsed) {
+            return redirect()->back()->with([
+                'status' => 'This language is already assigned to users.',
+                'alert-type' => 'error',
+            ]);
+        }
+
+        DB::table('language')->where('id', $id)->delete();
+
+        return redirect()->back()->with([
+            'status' => 'Language deleted successfully',
+            'alert-type' => 'success',
+        ]);
+    }
+
+    /**
+     * Admin guard helper
+     */
+    private function authorizeAdmin(): void
+    {
+        abort_if(!Auth::guard('admin')->check(), 403);
+    }
 }
