@@ -266,7 +266,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-<svg data-src="{{ asset('icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
+<svg data-src="{{ asset('icons/layoutIcons/user.svg')}}" class="nav-icon" fill="red"></svg>
                     <p>My Groups
                     </p>
                 </div>
@@ -383,7 +383,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <svg data-src="{{ asset('icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
+                    <svg data-src="{{ asset('icons/layoutIcons/user.svg')}}" class="nav-icon" fill="red"></svg>
 
 
                     <!--	<img class="nav-icon" src="{{ asset('icons/layoutIcons/user.svg') }}\" /-->

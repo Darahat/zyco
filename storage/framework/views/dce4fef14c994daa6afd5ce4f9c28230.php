@@ -1,19 +1,95 @@
-@extends('app')
 
-@section('title', 'Login')
 
-{{-- Load only required plugins --}}
-<x-plugins.stepper />
-<x-plugins.firebase />
-<x-plugins.firebase-auth-helpers />
-<x-plugins.toastr />
+<?php $__env->startSection('title', 'Login'); ?>
 
-@section('content')
+
+<?php if (isset($component)) { $__componentOriginalc314880370f79f54b4e10aa493aa823c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc314880370f79f54b4e10aa493aa823c = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.plugins.stepper','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('plugins.stepper'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc314880370f79f54b4e10aa493aa823c)): ?>
+<?php $attributes = $__attributesOriginalc314880370f79f54b4e10aa493aa823c; ?>
+<?php unset($__attributesOriginalc314880370f79f54b4e10aa493aa823c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc314880370f79f54b4e10aa493aa823c)): ?>
+<?php $component = $__componentOriginalc314880370f79f54b4e10aa493aa823c; ?>
+<?php unset($__componentOriginalc314880370f79f54b4e10aa493aa823c); ?>
+<?php endif; ?>
+<?php if (isset($component)) { $__componentOriginalf3c5b03d8ddc17b5f33d244697b75af2 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalf3c5b03d8ddc17b5f33d244697b75af2 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.plugins.firebase','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('plugins.firebase'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalf3c5b03d8ddc17b5f33d244697b75af2)): ?>
+<?php $attributes = $__attributesOriginalf3c5b03d8ddc17b5f33d244697b75af2; ?>
+<?php unset($__attributesOriginalf3c5b03d8ddc17b5f33d244697b75af2); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalf3c5b03d8ddc17b5f33d244697b75af2)): ?>
+<?php $component = $__componentOriginalf3c5b03d8ddc17b5f33d244697b75af2; ?>
+<?php unset($__componentOriginalf3c5b03d8ddc17b5f33d244697b75af2); ?>
+<?php endif; ?>
+<?php if (isset($component)) { $__componentOriginal48b7380a1276b882fc07b78fdadbd200 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal48b7380a1276b882fc07b78fdadbd200 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.plugins.firebase-auth-helpers','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('plugins.firebase-auth-helpers'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal48b7380a1276b882fc07b78fdadbd200)): ?>
+<?php $attributes = $__attributesOriginal48b7380a1276b882fc07b78fdadbd200; ?>
+<?php unset($__attributesOriginal48b7380a1276b882fc07b78fdadbd200); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal48b7380a1276b882fc07b78fdadbd200)): ?>
+<?php $component = $__componentOriginal48b7380a1276b882fc07b78fdadbd200; ?>
+<?php unset($__componentOriginal48b7380a1276b882fc07b78fdadbd200); ?>
+<?php endif; ?>
+<?php if (isset($component)) { $__componentOriginal962fcb3da899ca6228d485425f7fc10c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal962fcb3da899ca6228d485425f7fc10c = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.plugins.toastr','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('plugins.toastr'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal962fcb3da899ca6228d485425f7fc10c)): ?>
+<?php $attributes = $__attributesOriginal962fcb3da899ca6228d485425f7fc10c; ?>
+<?php unset($__attributesOriginal962fcb3da899ca6228d485425f7fc10c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal962fcb3da899ca6228d485425f7fc10c)): ?>
+<?php $component = $__componentOriginal962fcb3da899ca6228d485425f7fc10c; ?>
+<?php unset($__componentOriginal962fcb3da899ca6228d485425f7fc10c); ?>
+<?php endif; ?>
+
+<?php $__env->startSection('content'); ?>
 
 <div class="row bg-white">
     <div class="col-md-7">
         <div class="hold-transition login-page loginSideDiv ">
-            <img src="{{asset('images/Group 455.png')}}" alt="login_image" class="loginSideImage">
+            <img src="<?php echo e(asset('images/Group 455.png')); ?>" alt="login_image" class="loginSideImage">
         </div>
     </div>
     <div class="col-md-5 col-sm-12">
@@ -37,14 +113,14 @@
                                     </button>
                                 </div>
                                 <!-- <div class="line"></div> -->
-                                @if($result->need_otp == "Enabled")
+                                <?php if($result->need_otp == "Enabled"): ?>
                                 <div class="step" data-target="#test-l-3" id="step3_trigger">
                                     <button type="button" class="btn step-trigger">
                                         <!-- <span class="bs-stepper-circle">3</span> -->
                                         <!-- <span class="bs-stepper-label">Third step</span> -->
                                     </button>
                                 </div>
-                                @endif
+                                <?php endif; ?>
                                 <div class="step" data-target="#test-l-4">
                                     <button type="button" class="btn step-trigger">
                                         <!-- <span class="bs-stepper-circle">3</span> -->
@@ -56,7 +132,7 @@
                                 <div class="  p-4">
                                     <div id="test-l-1" class="content active">
                                         <div class="text-center">
-                                            <img src="{{asset('icons/zyco.png')}}" style="height:75px">
+                                            <img src="<?php echo e(asset('icons/zyco.png')); ?>" style="height:75px">
                                             <p class="welcome_msg  ">Welcome to Zyco!</p>
                                             <!-- <p class="text-muted">Enter your email address or Phone Number</p>
                                             <small>Please add country code with your phone number</small> -->
@@ -65,24 +141,22 @@
                                             <label for="exampleInputEmail1"><strong>
                                                     Email*</strong></label>
                                             <input type="text" id="need_password" name="need_password" hidden
-                                                value="{{$result->need_password}}">
+                                                value="<?php echo e($result->need_password); ?>">
                                             <input type="text" id="need_otp" name="need_otp" hidden
-                                                value="{{$result->need_otp}}">
+                                                value="<?php echo e($result->need_otp); ?>">
 
                                             <input type="text" class="form-control" id="email"
                                                 aria-describedby="emailHelp" name="email"
                                                 placeholder="Email Address or Phone Number(+31)" autofocus required>
                                             <small class="text-danger" id="email_error"></small>
                                             <div class="text-right">
-                                                <small><a href="{{route('signin_option')}}">Can't Login</a></small>
+                                                <small><a href="<?php echo e(route('signin_option')); ?>">Can't Login</a></small>
                                             </div>
-                                            {{-- <small id="emailHelp" class="form-text text-muted"> </small> --}}
-                                            {{-- <span class="text-danger" id="email_error"></span> --}}
+                                            
+                                            
 
                                         </div><br>
-                                        {{-- <div class="">
-											<a href="{{route('forget_password')}}">{{trans('auth.header.forget_pass')}}</a>
-                                    </div> --}}
+                                        
                                     <div class="row">
 
                                         <div class="col-md-12 ">
@@ -90,33 +164,32 @@
                                                 id="emailValidation">Next</button>
                                         </div>
                                         <div class="col-md-6">
-                                            <small><a href="{{route('user_registration')}}"> Create account</a></small>
+                                            <small><a href="<?php echo e(route('user_registration')); ?>"> Create account</a></small>
                                         </div>
                                     </div><br><br>
                                 </div>
                                 <div id="test-l-2" class="content">
                                     <div class="text-center">
-                                        <img src="{{asset('icons/zyco.png')}}" style="height:75px">
+                                        <img src="<?php echo e(asset('icons/zyco.png')); ?>" style="height:75px">
                                         <h5 style="font-weight: bolder">Sign in</h5>
                                         <p class="text-muted">Enter your password</p>
                                     </div>
                                     <div class="form-group">
-                                        {{-- <label for="exampleInputEmail1"
-											class="text-secondary">{{trans('auth.header.password')}}</label> --}}
+                                        
 
                                         <input type="password" class="form-control" id="password"
                                             aria-describedby="password" name="password" onkeyup="codePasswordCheck()"
-                                            placeholder="{{trans('auth.header.password')}}" autofocus required>
+                                            placeholder="<?php echo e(trans('auth.header.password')); ?>" autofocus required>
                                         <small id="password_error" class="form-text text-red">
                                             <div class="text-right">
-                                                <span><a href="{{route('signin_option')}}">Can't Login</a></span>
+                                                <span><a href="<?php echo e(route('signin_option')); ?>">Can't Login</a></span>
                                             </div>
                                             <br>
                                         </small>
-                                        {{-- <div class="d-flex justify-content-center"> --}}
+                                        
                                         <div id="sign-in-button"></div>
 
-                                        {{-- </div> --}}
+                                        
 
                                     </div>
 
@@ -127,7 +200,7 @@
                                         </div>
                                         <div class="col-md-6 ">
                                             <!-- onclick="phoneSendAuth();" -->
-                                            {{-- <button class="btn btn-primary float-right" id="sendOtp">Next</button> --}}
+                                            
                                             <button class="btn btn-primary float-right g-recaptcha" id="sendOtp"
                                                 data-sitekey="6LdYQQ8hAAAAAH1qvC4ufbT_8nFcRIIJ6M2o8ZBG"
                                                 data-callback='onSignInSubmit' data-action='submit'
@@ -136,10 +209,10 @@
                                     </div>
                                 </div>
 
-                                @if($result->need_otp == "Enabled")
+                                <?php if($result->need_otp == "Enabled"): ?>
                                 <div id="test-l-3" class="content">
                                     <div class="text-center">
-                                        <img src="{{asset('icons/zyco.png')}}" style="height:75px">
+                                        <img src="<?php echo e(asset('icons/zyco.png')); ?>" style="height:75px">
                                         <h4>Enter your security code</h4>
                                         <small id="sentSuccess" class="text-muted" role="alert">
                                         </small>
@@ -161,7 +234,7 @@
                                     </div>
                                     <small class="text-danger" id="errorOtp"></small>
 
-                                    {{-- <small id="error" class="text-danger" role="alert"></small> --}}
+                                    
 
                                     <div class="text-right">
                                         <span class="timer">
@@ -186,7 +259,7 @@
 											</div> -->
                                     </div><br>
                                 </div>
-                                @endif
+                                <?php endif; ?>
                                 <div id="test-l-4" class="content">
 
                                     <div id="continueToDashboard"
@@ -236,7 +309,7 @@
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
-<!-- <script src="{{ asset('assets/js/authStepper.js') }}"></script> -->
+<!-- <script src="<?php echo e(asset('assets/js/authStepper.js')); ?>"></script> -->
 <script>
 var need_otp = '';
 var need_password = '';
@@ -286,7 +359,7 @@ $("#sendOtp").click(function() {
             type: "GET",
             url: '<?= route("check_user_exist3") ?>',
             data: {
-                "_token": "{{ csrf_token() }}",
+                "_token": "<?php echo e(csrf_token()); ?>",
                 table: 'users',
                 field1: 'email',
                 value1: email,
@@ -335,7 +408,7 @@ function loginWithoutOTP() {
         type: "POST",
         url: '<?= route("login.custom") ?>',
         data: {
-            "_token": "{{ csrf_token() }}",
+            "_token": "<?php echo e(csrf_token()); ?>",
             email: email,
             password: password
         },
@@ -382,7 +455,7 @@ function codeverify() {
                     type: "POST",
                     url: '<?= route("login.custom") ?>',
                     data: {
-                        "_token": "{{ csrf_token() }}",
+                        "_token": "<?php echo e(csrf_token()); ?>",
                         email: email,
                         password: password
                     },
@@ -485,7 +558,7 @@ function sendToDashboardNow(redirectUrl) {
         window.location.href = redirectUrl;
     } else {
         // Fallback to driver dashboard if no URL provided
-        window.location.href = '{{ route("driver.dashboard") }}';
+        window.location.href = '<?php echo e(route("driver.dashboard")); ?>';
     }
 }
 
@@ -537,7 +610,7 @@ $("#emailValidation").click(function() {
                 type: "GET",
                 url: '<?= route("check_user_exist") ?>',
                 data: {
-                    "_token": "{{ csrf_token() }}",
+                    "_token": "<?php echo e(csrf_token()); ?>",
                     field: 'email',
                     table: 'users',
                     value: emailInputFieldValue,
@@ -670,4 +743,5 @@ function countdown() {
 }
 // countdown();
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Dream\Laravel Deep Learning\zyco\resources\views/auth/login.blade.php ENDPATH**/ ?>

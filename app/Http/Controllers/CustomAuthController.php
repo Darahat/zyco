@@ -37,31 +37,56 @@ class CustomAuthController extends Controller
             'password' => 'required',
         ]);
 
-        // if (Auth::attempt($credentials)) {
-
         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile_number';
 
         if (Auth::attempt([$fieldType => $request->email, 'password' => $request->password])) {
+            $user = Auth::user();
+            $user_type = strtolower($user->user_type);
+            
+            \Log::info('User login successful', [
+                'user_id' => $user->id,
+                'user_type' => $user->user_type,
+                'session_id' => session()->getId(),
+            ]);
 
-            $request->session()->regenerate();
-            $user_type = strtolower(Auth::user()->user_type);
+            // For AJAX requests, return JSON
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Login Successful',
+                    'user_type' => $user_type,
+                    'redirect_url' => match($user_type) {
+                        'driver' => route('driver.dashboard'),
+                        'rider' => route('rider.dashboard'),
+                        default => route('dashboard')
+                    }
+                ]);
+            }
+            
+            // For form submissions, redirect
+            $dashboard_route = match($user_type) {
+                'driver' => 'driver.dashboard',
+                'rider' => 'rider.dashboard',
+                default => 'dashboard'
+            };
 
-            $notification = array(
-                'status' => 'Login Successfull',
+            return redirect()->route($dashboard_route)->with([
+                'status' => 'Login Successful',
                 'alert-type' => 'success'
-            );
-            if ($user_type == 'driver') : $user_type = "dispatch";
-            endif;
-            $mobile_no = Auth::user()->mobile_number;
-
-            return $mobile_no;
-            //    }
+            ]);
         } else {
-            $notification = array(
-                'status' => 'Login Failed',
+            // For AJAX requests, return JSON error
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid email/phone or password'
+                ]);
+            }
+            
+            return redirect()->back()->withInput()->with([
+                'status' => 'Invalid email/phone or password',
                 'alert-type' => 'error'
-            );
-            return null;
+            ]);
         }
     }
 

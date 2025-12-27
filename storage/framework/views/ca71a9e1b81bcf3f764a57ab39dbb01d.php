@@ -266,7 +266,7 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-<svg data-src="<?php echo e(asset('icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
+<svg data-src="<?php echo e(asset('icons/layoutIcons/user.svg')); ?>" class="nav-icon" fill="red"></svg>
                     <p>My Groups
                     </p>
                 </div>
@@ -278,7 +278,7 @@ endif;
         </a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('group_have_joined')); ?>" class="nav-link">
+        <a href="<?php echo e(route('group_have_joined')); ?>" class="nav-link">
             <div class="row">
                 <div class="col-2 text-center">
                     <div class="left"> </div>
@@ -383,10 +383,10 @@ endif;
                     <div class="left"> </div>
                 </div>
                 <div class="col center-content">
-                    <svg data-src="<?php echo e(asset('icons/layoutIcons/user.svg" class="nav-icon" fill="red"></svg>
+                    <svg data-src="<?php echo e(asset('icons/layoutIcons/user.svg')); ?>" class="nav-icon" fill="red"></svg>
 
 
-                    <!--	<img class="nav-icon" src="{{ asset('icons/layoutIcons/user.svg')); ?>\" /-->
+                    <!--	<img class="nav-icon" src="<?php echo e(asset('icons/layoutIcons/user.svg')); ?>\" /-->
                     <p>Drivers List
                     </p>
                 </div>
